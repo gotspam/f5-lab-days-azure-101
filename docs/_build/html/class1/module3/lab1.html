@@ -1,0 +1,1112 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.3.1. Task – Deploy an ARM template &#8212; F5 Lab Days - Azure  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/f5_agility_theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/f5.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" href="module3.html" />
+<!--
+# Copyright 2017 F5 Networks
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<link href="https://cdn.f5.com/favicon.ico" rel="icon">
+<script src="https://use.fontawesome.com/21fb8a09c3.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+  </head>
+  <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="row corp-header">
+      <div class="container corp-header">
+        <div class="container corp-menu">
+          <ul>
+            <li><a href="https://f5.com" class="internalLink">F5.com</a></li>
+            <li><a href="https://support.f5.com">Support</a></li>
+            <li><a href="https://devcentral.f5.com">Community</a></li>
+            <li><a href="https://github.com/F5Networks">GitHub</a></li>
+            <li><a href="https://f5.com/about-us/careers">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pageHeader">
+      <div class="container stat">
+        <div class="col-xs-12 stat">
+          <a class="internalLink" href="https://f5.com">
+            <img class="logo" src="https://cdn.f5.com/websites/support/assets/images/logo.svg" width="50" height="44" alt="F5 Networks" title="F5 Networks" border="0">
+          </a>
+            <ul id="MainMenu" class="main-menu">
+              <li>
+                <a href="#">Products
+                  <span class="indicator"><span class="arrow-up"></span></span>
+                </a>
+
+                <div class="menu-panel soft-hide" id="ProductsSubmenu">
+                  <div class="container">
+                    <ul class="submenu col-sm-11">
+                      <li class="third"><span class="a-mm-h">Connectors</span>
+                        <ul>
+                          <li><a href="http://clouddocs.f5.com/products/connectors/marathon-bigip-ctlr/latest" data-link-type="Nav: Mega">F5 Marathon BIG-IP Controller</a></li>
+                          <li><a href="http://clouddocs.f5.com/products/connectors/marathon-asp-ctlr/latest" data-link-type="Nav: Mega">F5 Marathon ASP Controller</a></li>
+                          <li><a href="http://clouddocs.f5.com/products/connectors/k8s-bigip-ctlr/latest" data-link-type="Nav: Mega">F5 Kubernetes BIG-IP Controller</a></li>
+                          <li><a href="http://clouddocs.f5.com/products/connectors/f5-kube-proxy/latest" data-link-type="Nav: Mega">F5 Kubernetes Proxy</a></li>
+                        </ul>
+                        <!--span class="seemore"><a data-link-type="Nav: Mega" href="/products/connectors">See all </a></--span-->
+                      </li>
+                      <li class="divider"></li>
+                      <li class="third"><span class="a-mm-h">Application Service Proxy</span>
+                        <ul>
+                          <li><a href="http://clouddocs.f5.com/products/asp/latest" data-link-type="Nav: Mega">F5 Application Service Proxy</a></li>
+                        </ul>
+                        <!--span class="seemore"><a href="/products/">See all </a></span-->
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#">Container Integrations
+                  <span class="indicator"><span class="arrow-up"></span></span>
+                </a>
+
+                <div class="menu-panel soft-hide" id="ContainersSubmenu">
+                  <div class="container">
+                    <ul class="submenu col-sm-11">
+                      <li class="third"><span class="a-mm-h">Container Integrations</span>
+                        <ul>
+                          <li><a href="http://clouddocs.f5.com/containers/latest/marathon/" data-link-type="Nav: Mega">Mesos Marathon</a></li>
+                          <li><a href="http://clouddocs.f5.com/containers/latest/kubernetes/" data-link-type="Nav: Mega">Kubernetes</a></li>
+                          <li><a href="http://clouddocs.f5.com/containers/latest/openshift/" data-link-type="Nav: Mega">RedHat OpenShift</a></li>
+                        </ul>
+                        <span class="seemore"><a data-link-type="Nav: Mega" href="http://clouddocs.f5.com/containers/latest">View details </a></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#">Clouds
+                  <span class="indicator"><span class="arrow-up"></span></span>
+                </a>
+
+                <div class="menu-panel soft-hide" id="CloudsSubmenu">
+                  <div class="container">
+                    <ul class="submenu col-sm-11">
+                      <li class="third"><span class="a-mm-h">Cloud Integrations</span>
+                        <ul>
+                          <li><a href="http://clouddocs.f5.com/cloud/openstack/" data-link-type="Nav: Mega">OpenStack</a></li>
+                        </ul>
+                        <!--span class="seemore"><a data-link-type="Nav: Mega" href="/cloud/">See all </a></span-->
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <a href="#">Resources
+                  <span class="indicator"><span class="arrow-up"></span></span>
+                </a>
+                <div class="menu-panel soft-hide" id="UPCProgramSubmenu">
+                  <div class="container">
+                    <ul class="submenu col-sm-11">
+                      <li class="third">
+                        <span class="a-mm-h">Downloads</span>
+                        <ul>
+                          <li><a target="_blank" data-link-type="Nav: Mega" href="https://hub.docker.com/r/f5networks/" class="internalLink">Docker Hub</a></li>
+                          <li><a target="_blank" data-link-type="Nav: Mega" href="https://store.docker.com/images/f5networks" class="internalLink">Docker Store</a></li>
+                        </ul>
+                      </li>
+                      <li class="divider"></li>
+
+                      <li class="third">
+                        <span class="a-mm-h">OpenSource</span>
+                        <ul>
+                          <li><a target="_blank" data-link-type="Nav: Mega" href="https://github.com/F5Networks" class="internalLink">GitHub</a></li>
+                        </ul>
+                      </li>
+                      <li class="divider"></li>
+
+                      <li class="third">
+                        <a href="//university.f5.com" class="a-mm-h internalLink" target="_blank" data-link-type="Nav: Mega">F5 University</a>
+                        <ul>
+                          <li>
+                            <p>Get up to speed with free self-paced courses</p>
+                          </li>
+                        </ul>
+                        <a data-ng-href="https://devcentral.f5.com" class="a-mm-h internalLink" target="_blank" data-link-type="Nav: Mega" href="https://devcentral.f5.com">DevCentral</a>
+                        <ul>
+                          <li>
+                            <p>Join the community of 250,000+ technical peers</p>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /container-fluid -->
+</nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 sidebar">
+         <h4><a href="../../">F5 Lab Days - Azure </a></h4>
+<div id="searchbox" style="display: none" role="search">
+  <form class="search" action="../../search.html" method="get">
+    <div>
+      <input type="text" name="q" placeholder="Search" style="padding-left: 6px;"/>
+      <!-- <input type="submit" value="Go" style="margin-top: 4px;"/> -->
+      <button type="submit" class="btn btn-primary btn-xs">Go</button>
+    </div>
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+  <p class="caption">
+   <span class="caption-text">Current Page</span>
+  </p>
+  <ul>
+<li><a class="reference internal" href="#">2.3.1. Task – Deploy an ARM template</a></li>
+<li><a class="reference internal" href="#task-review-results-of-arm-template">2.3.2. Task – Review Results of ARM Template</a></li>
+<li><a class="reference internal" href="#task-deploy-wordpress">2.3.3. Task – Deploy WordPress</a></li>
+<li><a class="reference internal" href="#task-configure-an-f5-big-ip-pool-and-vip-for-the-wordpress-application">2.3.4. Task – Configure an F5 BIG-IP Pool and VIP for the WordPress application</a></li>
+<li><a class="reference internal" href="#task-restrict-access-to-wordpress-through-the-f5-big-ip-only">2.3.5. Task – Restrict access to WordPress through the F5 BIG-IP only</a></li>
+<li><a class="reference internal" href="#task-test-ha-within-azure">2.3.6. Task – Test HA within Azure</a></li>
+<li><a class="reference internal" href="#task-lab-3-teardown">2.3.7. Task – Lab 3 Teardown</a></li>
+<li><a class="reference internal" href="#appendix-troubleshooting">2.3.8. Appendix – Troubleshooting</a></li>
+</ul>
+
+
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">1. Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. Class - F5 Lab Days - Azure</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="module3.html">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="module3.html"
+                        title="previous chapter">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></p>
+        
+      </div>
+      <div class="col-md-offset-3 col-sm-offset-3 main">
+        <h4>
+          <a href="/">Community Training Classes &amp; Labs</a> &gt; <a href="../../index.html">F5 Lab Days - Azure</a>
+          <span class="right"><a href="../../genindex.html">Index</a></span>
+        </h4>
+        
+  <div class="section" id="task-deploy-an-arm-template">
+<h1>2.3.1. Task – Deploy an ARM template<a class="headerlink" href="#task-deploy-an-arm-template" title="Permalink to this headline">¶</a></h1>
+<p>This task will walk through a series of steps in order to choose
+and deploy an ARM template in the Azure Portal. Let’s start by
+going to the Azure Portal.</p>
+<ol class="arabic">
+<li><p class="first">Open a new browser and go to
+<a class="reference external" href="https://github.com/F5Networks/f5-azure-arm-templates">https://github.com/F5Networks/f5-azure-arm-templates</a></p>
+</li>
+<li><p class="first">Scroll down and notice the different licensing options</p>
+</li>
+<li><p class="first">Choose <strong>Deploying the BIG-IP in Azure - BYOL</strong> by right-clicking and opening in a new tab</p>
+<a class="reference internal image-reference" href="../../_images/lab3-image003.png"><img alt="../../_images/lab3-image003.png" src="../../_images/lab3-image003.png" style="height: 350px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You will be directed back to the Azure Portal.</p>
+<p>Alternatively, you can initiate a new template from Azure which
+will require a few more clicks and some copy/paste skills.</p>
+<ul class="last simple">
+<li>Go to your Azure Portal dashboard</li>
+<li>Click the green <strong>+</strong> sign at the top left corner of the screen</li>
+<li>Start searching the marketplace by typing ‘template’ in the search field</li>
+<li>Hit <strong>Enter</strong></li>
+<li>Select the <strong>Template Deployment</strong> and click <strong>Create</strong></li>
+<li>Find the ARM template on github</li>
+<li>View the github azuredeploy.json file in “Raw”</li>
+<li>Select all text and copy</li>
+<li>Go back to Azure Portal</li>
+<li>Select all text and paste into the “Edit Template” window</li>
+<li>Click <strong>Save</strong></li>
+<li>Or…just click the easy deploy button from github</li>
+</ul>
+</div>
+</li>
+<li><p class="first">You should now be back at the Azure Portal in “Custom Deployment”</p>
+<p>Use the information provided in Table 3.1 to complete the Custom
+deployment process. Leave all other settings as default.</p>
+<p>Table 3.1</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Subscription</td>
+<td>&lt;User Unique&gt;</td>
+</tr>
+<tr class="row-odd"><td>Resource group</td>
+<td>Create new</td>
+</tr>
+<tr class="row-even"><td>Resource group name</td>
+<td>bigipuser&lt;student number&gt;-aa</td>
+</tr>
+<tr class="row-odd"><td>Location</td>
+<td>&lt;Closest Azure DC&gt;</td>
+</tr>
+<tr class="row-even"><td>Admin Password</td>
+<td>Demo123Demo123!</td>
+</tr>
+<tr class="row-odd"><td>Dns Name for Public IP</td>
+<td>f5bigipuser&lt;student number&gt;aa</td>
+</tr>
+<tr class="row-even"><td>License Key 1</td>
+<td>&lt;Provided by proctor&gt;</td>
+</tr>
+<tr class="row-odd"><td>License Key 2</td>
+<td>&lt;Provided by proctor&gt;</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../_images/lab3-image004.png"><img alt="../../_images/lab3-image004.png" src="../../_images/lab3-image004.png" style="width: 364.5px; height: 417.0px;" /></a>
+</li>
+<li><p class="first">Scroll down and check “I agree to the terms and conditions stated
+above”</p>
+</li>
+<li><p class="first">Click on <strong>Purchase</strong></p>
+<a class="reference internal image-reference" href="../../_images/lab3-image005.png"><img alt="../../_images/lab3-image005.png" src="../../_images/lab3-image005.png" style="width: 371.5px; height: 170.0px;" /></a>
+</li>
+<li><p class="first">Review “Notifications” in the top right and notice your new deployment.</p>
+<a class="reference internal image-reference" href="../../_images/lab3-image006.png"><img alt="../../_images/lab3-image006.png" src="../../_images/lab3-image006.png" style="width: 214.0px; height: 99.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You just setup two BIG-IPs as a cluster without having to know any
+specific knowledge about the F5. Deployment can take 10-15
+minutes so be patient. Both instances are active and are not setup
+the traditional way because of the network limitation in Azure.
+There is no L2 connectivity (similar to AWS). As a result, HA is
+assisted with placing an ALB in front of the F5 instances and also
+by using F5 sync groups.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="task-review-results-of-arm-template">
+<h1>2.3.2. Task – Review Results of ARM Template<a class="headerlink" href="#task-review-results-of-arm-template" title="Permalink to this headline">¶</a></h1>
+<p>In the previous task, you used an ARM template to automate the deployment
+of F5 instances and Azure networking components. Now is a good time to
+review other pieces that were created by the ARM template. Let’s go back
+to the Azure Portal.</p>
+<ol class="arabic">
+<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">Look for the resource type load balancer and select it</p>
+<a class="reference internal image-reference" href="../../_images/image96.png"><img alt="../../_images/image96.png" src="../../_images/image96.png" style="width: 717.5px; height: 306.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This load balancer is an Azure Load Balancer (ALB) which will be in
+front of the two BIG-IPs and used to support the setup of the cluster.</p>
+</div>
+<p>The ALB has some important NAT rules to explore. These will direct
+management traffic to the appropriate F5. Review the NAT rules first.</p>
+</li>
+<li><p class="first">From the Resource Group, click <strong>Inbound NAT rules</strong></p>
+<a class="reference internal image-reference" href="../../_images/image97.png"><img alt="../../_images/image97.png" src="../../_images/image97.png" style="width: 682.0px; height: 279.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember the different service ports. These will be used in subsequent steps
+to connect to the F5 for management purposes.</p>
+</div>
+</li>
+<li><p class="first">From the Resource Group, click <strong>Backend pools</strong></p>
+</li>
+<li><p class="first">Expand <strong>loadBalancerBackEnd</strong> to view the IP addresses of the
+F5 BIG-IPs sitting behind the Azure ALB</p>
+<a class="reference internal image-reference" href="../../_images/image98.png"><img alt="../../_images/image98.png" src="../../_images/image98.png" style="width: 718.0px; height: 269.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Take note of these IP addresses. These are the applications running
+on the F5 instances. The ALB is load balancing each F5 in active/active.</p>
+</div>
+<p>Next you will need to create some Azure load balancing rules. These will
+help direct client/server traffic to the appropriate F5 based on F5
+health within the active/active cluster. However, first Azure requires
+that health probes are created.</p>
+</li>
+<li><p class="first">From the Resource Group, click <strong>Health probes</strong></p>
+</li>
+<li><p class="first">Then click the <strong>+ Add</strong> button</p>
+<img alt="../../_images/lab03-arm01.png" src="../../_images/lab03-arm01.png" />
+<p>Use the information provided in Table 3.2 to complete the “Add health probe”
+page. Leave all other settings as default.</p>
+<p>Table 3.2</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>lbprobeHTTP1</td>
+</tr>
+<tr class="row-odd"><td>Protocol</td>
+<td>HTTP</td>
+</tr>
+<tr class="row-even"><td>Port</td>
+<td>8081</td>
+</tr>
+</tbody>
+</table>
+<img alt="../../_images/lab03-arm02.png" src="../../_images/lab03-arm02.png" />
+</li>
+<li><p class="first">Scroll down and select <strong>OK</strong> and the results will show one new health probe</p>
+<img alt="../../_images/lab03-arm03.png" src="../../_images/lab03-arm03.png" />
+<p>The health probe is created and now you’ll need to create the
+Azure load balancing rules.</p>
+</li>
+<li><p class="first">From the Resource Group, click <strong>Load balancing rules</strong></p>
+</li>
+<li><p class="first">Then click the <strong>+ Add</strong> button</p>
+<img alt="../../_images/lab03-arm04.png" src="../../_images/lab03-arm04.png" />
+<p>Use the information provided in Table 3.3 to complete the “Add load balancing rule”
+page. Leave all other settings as default.</p>
+<p>Table 3.3</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>APP1-HTTP</td>
+</tr>
+<tr class="row-odd"><td>Backend port</td>
+<td>8081</td>
+</tr>
+</tbody>
+</table>
+<img alt="../../_images/lab03-arm05.png" src="../../_images/lab03-arm05.png" />
+</li>
+<li><p class="first">Scroll down and select <strong>OK</strong> and the results will show one new load balancing rule</p>
+<img alt="../../_images/lab03-arm06.png" src="../../_images/lab03-arm06.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Take note of the different port mappings.</p>
+</div>
+<p>You will now connect to the F5 BIG-IPs. To do so you first need to
+identify the BIG-IPs’ public IP addresses.</p>
+</li>
+<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">From the Resource Group, click one of the F5 virtual machines to see its public IP</p>
+<a class="reference internal image-reference" href="../../_images/image100.png"><img alt="../../_images/image100.png" src="../../_images/image100.png" style="width: 951.0px; height: 578.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image101.png"><img alt="../../_images/image101.png" src="../../_images/image101.png" style="width: 489.5px; height: 179.5px;" /></a>
+</li>
+<li><p class="first">Then click the other F5 virtual machine and notice that both F5 BIG-IPs have
+the same public IP address</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can access each individual unit by using the service ports identified
+earlier in the NAT rules.</p>
+</div>
+</li>
+<li><p class="first">Open a browser and connect to the BIG-IPs’ management GUIs using the NAT’d
+service ports. In our case, the service ports are 8443 and 8444.</p>
+<ul class="simple">
+<li>F5 #1 = https://&lt;public-IP&gt;:8443</li>
+<li>F5 #2 = https://&lt;public-IP&gt;:8444</li>
+</ul>
+<a class="reference internal image-reference" href="../../_images/image119.png"><img alt="../../_images/image119.png" src="../../_images/image119.png" style="width: 742.0px; height: 518.0px;" /></a>
+</li>
+</ol>
+</div>
+<div class="section" id="task-deploy-wordpress">
+<h1>2.3.3. Task – Deploy WordPress<a class="headerlink" href="#task-deploy-wordpress" title="Permalink to this headline">¶</a></h1>
+<p>In this task you will deploy another virtual machine and install the
+WordPress application to be placed behind the BIG-IP. Let’s go back to
+the Microsoft Azure Portal.</p>
+<ol class="arabic">
+<li><p class="first">Click the green <strong>+</strong> sign at the top left corner of the screen</p>
+</li>
+<li><p class="first">Start searching the marketplace by typing ‘bitnami wordpress’ in the
+search field and hit <strong>Enter</strong></p>
+<a class="reference internal image-reference" href="../../_images/image32.png"><img alt="../../_images/image32.png" src="../../_images/image32.png" style="width: 596.0px; height: 194.0px;" /></a>
+</li>
+<li><p class="first">Select <strong>WordPress Certified by Bitnami</strong></p>
+<a class="reference internal image-reference" href="../../_images/image33.png"><img alt="../../_images/image33.png" src="../../_images/image33.png" style="width: 605.0px; height: 445.0px;" /></a>
+</li>
+<li><p class="first">Click on <strong>Create</strong> at the bottom of the screen</p>
+<p>Use the information in Table 3.4 to complete the “Basics” configuration
+page during this deployment.</p>
+<p>Table 3.4</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>user&lt;student number&gt;wordpress</td>
+</tr>
+<tr class="row-odd"><td>VM disk type</td>
+<td>SSD</td>
+</tr>
+<tr class="row-even"><td>User name</td>
+<td>azureuser&lt;student number&gt;</td>
+</tr>
+<tr class="row-odd"><td>Authentication type</td>
+<td>SSH public key</td>
+</tr>
+<tr class="row-even"><td>SSH public key</td>
+<td>From Lab 1, Task 1</td>
+</tr>
+<tr class="row-odd"><td>Subscription</td>
+<td>&lt;User Unique&gt;</td>
+</tr>
+<tr class="row-even"><td>Resource Group</td>
+<td>Existing: bigipuser&lt;student number&gt;-aa</td>
+</tr>
+<tr class="row-odd"><td>Resource Group</td>
+<td>bigipuser&lt;student number&gt;-aa</td>
+</tr>
+<tr class="row-even"><td>Location</td>
+<td>&lt;Closest Azure DC&gt;</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../_images/image120.png"><img alt="../../_images/image120.png" src="../../_images/image120.png" style="width: 676.0px; height: 707.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>OK</strong> at the bottom of the page</p>
+<p>Use the information in Table 3.5 to complete the “Choose a size” configuration
+page during this deployment.</p>
+<p>Table 3.5</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="52%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Disk Type</td>
+<td>HDD</td>
+</tr>
+<tr class="row-odd"><td>Size</td>
+<td>A1 Basic</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">Choose <strong>A1 Basic</strong></p>
+<a class="reference internal image-reference" href="../../_images/image35.png"><img alt="../../_images/image35.png" src="../../_images/image35.png" style="width: 1098.0px; height: 343.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>Select</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">On the Settings page you’ll see a warning concerning the VM size
+chosen.</p>
+</div>
+<p>Use the information in Table 3.6 to complete the “Settings”
+configuration page during this deployment.</p>
+<p>Table 3.6</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="70%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Storage Type</td>
+<td>HDD</td>
+</tr>
+<tr class="row-odd"><td>Use managed disks</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">Change the “Disk type” to <strong>HDD</strong></p>
+</li>
+<li><p class="first">Set “Use managed disk” to <strong>No</strong></p>
+</li>
+<li><p class="first">Keep the other configurations unmodified</p>
+<a class="reference internal image-reference" href="../../_images/image121.png"><img alt="../../_images/image121.png" src="../../_images/image121.png" style="width: 676.0px; height: 738.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>OK</strong></p>
+</li>
+<li><p class="first">Verify the summary</p>
+<a class="reference internal image-reference" href="../../_images/image37-top.png"><img alt="../../_images/image37-top.png" src="../../_images/image37-top.png" style="width: 586.5px; height: 287.5px;" /></a>
+</li>
+<li><p class="first">Supply your email and phone number for validation</p>
+<img alt="../../_images/lab-instance-validation.png" src="../../_images/lab-instance-validation.png" />
+</li>
+<li><p class="first">Click <strong>Purchase</strong> or <strong>Create</strong></p>
+</li>
+<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">Select your WordPress “Public IP address”</p>
+<a class="reference internal image-reference" href="../../_images/image123.png"><img alt="../../_images/image123.png" src="../../_images/image123.png" style="width: 719.0px; height: 440.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image124.png"><img alt="../../_images/image124.png" src="../../_images/image124.png" style="width: 657.0px; height: 241.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember the WordPress private and public IP addresses. These will be used
+in subsequent steps.</p>
+</div>
+</li>
+<li><p class="first">Open a browser and navigate to http://&lt;wordpress-public-IP&gt;</p>
+<a class="reference internal image-reference" href="../../_images/image01-wordpress.png"><img alt="../../_images/image01-wordpress.png" src="../../_images/image01-wordpress.png" style="width: 640.5px; height: 450.5px;" /></a>
+</li>
+</ol>
+</div>
+<div class="section" id="task-configure-an-f5-big-ip-pool-and-vip-for-the-wordpress-application">
+<h1>2.3.4. Task – Configure an F5 BIG-IP Pool and VIP for the WordPress application<a class="headerlink" href="#task-configure-an-f5-big-ip-pool-and-vip-for-the-wordpress-application" title="Permalink to this headline">¶</a></h1>
+<p>In this task you will configure the BIG-IP with a Virtual Server and
+Pool to allow inbound Internet access to the WordPress application. Let’s go back
+to the Microsoft Azure Portal.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">We will need the private IP address for the WordPress instance from Task 3.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">Connect to the BIG-IP0 using https://&lt;public-IP&gt;:8443</p>
+</li>
+<li><p class="first">From the BIG-IP GUI, go to <strong>Local traffic -&gt; Pools -&gt; Pool List</strong> and
+click on the <strong>+</strong> sign. Configure the pool using the information provided
+in Table 3.7 below leaving all other fields set to defaults.</p>
+<p>Table 3.7</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>wordpress_pool</td>
+</tr>
+<tr class="row-odd"><td>Health Montitor</td>
+<td>http_head_f5</td>
+</tr>
+<tr class="row-even"><td>Node Name</td>
+<td>wordpress</td>
+</tr>
+<tr class="row-odd"><td>Address</td>
+<td>&lt;your WordPress private IP address&gt;</td>
+</tr>
+<tr class="row-even"><td>Service Port</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../_images/image126.png"><img alt="../../_images/image126.png" src="../../_images/image126.png" style="width: 873.0px; height: 689.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>Finished</strong>. When configured correctly, the pool status will be green.</p>
+<a class="reference internal image-reference" href="../../_images/image127.png"><img alt="../../_images/image127.png" src="../../_images/image127.png" style="width: 564.0px; height: 299.0px;" /></a>
+</li>
+<li><p class="first">Check that the pool is synced to BIG-IP1 (same public IP, port 8444).</p>
+<ul class="simple">
+<li>Connect to the BIG-IP1 using https://&lt;public-IP&gt;:8444</li>
+<li>From the BIG-IP GUI, go to <strong>Local traffic -&gt; Pools -&gt; Pool List</strong></li>
+<li>Verify that new pool “wordpress_pool” is successfully synced</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The Azure Load Balancer NATs HTTP traffic 80 -&gt; <strong>8081</strong>. This is why
+the F5 virtual server you will create below listens on port 8081.</p>
+</div>
+<p>Now that the pool is created, you need a virtual server to accept traffic
+and load balance to the pool. You will need to go back to BIG-IP0 (port 8443)
+and create a transparent virtual server. A transparent virtual server is a
+special type of VS that listens on all IP addresses/ports and looks like 0.0.0.0/0.</p>
+</li>
+<li><p class="first">Open or change browsers back to BIG-IP0 (port 8443)</p>
+</li>
+<li><p class="first">Create a virtual server by going to
+<strong>Local Traffic -&gt; Virtual Servers -&gt; Virtual Server List</strong> and click
+on the <strong>+</strong> sign. Configure the Virtual Server using the information
+provided in Table 3.8 below leaving all other fields set to defaults.</p>
+<p>Table 3.8</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="61%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Name</td>
+<td>vs_wordpress</td>
+</tr>
+<tr class="row-odd"><td>Destination Address</td>
+<td>0.0.0.0/0</td>
+</tr>
+<tr class="row-even"><td>Service Port</td>
+<td>8081</td>
+</tr>
+<tr class="row-odd"><td>Source Address Translation</td>
+<td>Auto Map</td>
+</tr>
+<tr class="row-even"><td>Default Pool</td>
+<td>wordpress_pool</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../_images/image128.png"><img alt="../../_images/image128.png" src="../../_images/image128.png" style="width: 846.0px; height: 1074.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image129.png"><img alt="../../_images/image129.png" src="../../_images/image129.png" style="width: 902.0px; height: 708.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>Finish</strong></p>
+</li>
+<li><p class="first">Check the virtual server is green</p>
+<a class="reference internal image-reference" href="../../_images/image130.png"><img alt="../../_images/image130.png" src="../../_images/image130.png" style="width: 718.5px; height: 161.5px;" /></a>
+</li>
+<li><p class="first">Check that the virtual server is synced to BIG-IP1 (same public IP, port 8444).</p>
+<ul class="simple">
+<li>Connect to the BIG-IP1 using https://&lt;public-IP&gt;:8444</li>
+<li>From the BIG-IP GUI, go to <strong>Local traffic -&gt; Virtual Servers -&gt; Virtual Server List</strong></li>
+<li>Verify that new virtual server “vs_wordpress” is successfully synced</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since the virtual server is listening on port 8081, make sure
+the network security group for the Azure F5 instance allows
+port 8081. We’ll take care of that in the next steps.</p>
+</div>
+</li>
+<li><p class="first">Go back to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">Select your F5 Network security group</p>
+<img alt="../../_images/lab03-arm07.png" src="../../_images/lab03-arm07.png" />
+</li>
+<li><p class="first">Select <strong>Inbound security rules</strong> and review the current ruleset</p>
+<img alt="../../_images/lab03-arm08.png" src="../../_images/lab03-arm08.png" />
+</li>
+<li><p class="first">Click <strong>+ Add</strong></p>
+<p>Using the information provided in Table 3.9, add a rule to allow traffic to
+the new application on port 8081.</p>
+<p>Table 3.9</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Source</td>
+<td>Any</td>
+</tr>
+<tr class="row-odd"><td>Source Port</td>
+<td>*</td>
+</tr>
+<tr class="row-even"><td>Destination</td>
+<td>Any</td>
+</tr>
+<tr class="row-odd"><td>Destination Port</td>
+<td>8081</td>
+</tr>
+<tr class="row-even"><td>Protocol</td>
+<td>Any</td>
+</tr>
+<tr class="row-odd"><td>Action</td>
+<td>Allow</td>
+</tr>
+<tr class="row-even"><td>Priority</td>
+<td>103</td>
+</tr>
+<tr class="row-odd"><td>Name</td>
+<td>f5-allow-8081</td>
+</tr>
+</tbody>
+</table>
+<img alt="../../_images/lab03-arm09.png" src="../../_images/lab03-arm09.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This new inbound rule allows the client/server traffic to traverse
+the Azure load balancer, then hit the F5 virtual server on port 8081,
+then load balance to the WordPress server.</p>
+</div>
+</li>
+<li><p class="first">Click <strong>OK</strong> to complete the rule and to review the results</p>
+<img alt="../../_images/lab03-arm10.png" src="../../_images/lab03-arm10.png" />
+<p>To verify proper functionality, let’s browse the site and
+verify F5 statistics.</p>
+</li>
+<li><p class="first">Open a browser to to http://&lt;alb-public-IP&gt; and ensure it
+displays your WordPress blog.</p>
+<a class="reference internal image-reference" href="../../_images/image01-wordpress.png"><img alt="../../_images/image01-wordpress.png" src="../../_images/image01-wordpress.png" style="width: 640.5px; height: 450.5px;" /></a>
+</li>
+<li><p class="first">Now check the statistics of your virtual server to verify traffic flow,
+by navigating to <strong>Statistics -&gt; Module Statistics -&gt; Local Traffic</strong></p>
+</li>
+<li><p class="first">Under <strong>Statistics Type</strong>, select <strong>Virtual Servers</strong></p>
+<a class="reference internal image-reference" href="../../_images/image55.png"><img alt="../../_images/image55.png" src="../../_images/image55.png" style="width: 1225.0px; height: 388.0px;" /></a>
+<p>You have now completed the BIG-IP configuration for the WordPress
+application. There are still some Azure tasks to complete.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="task-restrict-access-to-wordpress-through-the-f5-big-ip-only">
+<h1>2.3.5. Task – Restrict access to WordPress through the F5 BIG-IP only<a class="headerlink" href="#task-restrict-access-to-wordpress-through-the-f5-big-ip-only" title="Permalink to this headline">¶</a></h1>
+<p>This task involves locking down the network security group to restrict
+access to the WordPress application. We only want to allow access
+through the F5. Currently access still works direct to the WordPress
+application via public IP address http://&lt;wordpress-public-IP&gt; as
+demonstrated in the previous task. You now need to modify
+the network security group to remove direct inbound access to the
+WordPress application. Let’s go back to the Azure Portal.</p>
+<ol class="arabic">
+<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">Select your WordPress Network security group</p>
+<a class="reference internal image-reference" href="../../_images/image133.png"><img alt="../../_images/image133.png" src="../../_images/image133.png" style="width: 967.0px; height: 675.0px;" /></a>
+</li>
+<li><p class="first">Remove the HTTP and HTTPS inbound rules while leaving only SSH access</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will only allow web access to the WordPress blog via the F5 BIG-IP.</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/image44.png"><img alt="../../_images/image44.png" src="../../_images/image44.png" style="width: 918.0px; height: 192.0px;" /></a>
+</li>
+<li><p class="first">Click on the <strong>…</strong> link at the far right side of the rule to be deleted</p>
+<a class="reference internal image-reference" href="../../_images/image45.png"><img alt="../../_images/image45.png" src="../../_images/image45.png" style="width: 903.0px; height: 132.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>Delete</strong></p>
+</li>
+<li><p class="first">Confirm the delete action when prompted by clicking <strong>Yes</strong></p>
+</li>
+<li><p class="first">Now it’s time to confirm web access has been restricted to WordPress.
+Open a private browser window (not a normal window…choose <strong>private</strong>)</p>
+</li>
+<li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; and http://&lt;WordPress-Public-IP&gt;
+do <em>NOT</em> display the WordPress blog</p>
+<a class="reference internal image-reference" href="../../_images/image134.png"><img alt="../../_images/image134.png" src="../../_images/image134.png" style="width: 793.0px; height: 551.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You should now have an active/active F5 pair running in Azure with the
+WordPress application as a pool member. Traffic should flow successfully
+through the F5. However, traffic should fail if going direct to WordPress.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="task-test-ha-within-azure">
+<h1>2.3.6. Task – Test HA within Azure<a class="headerlink" href="#task-test-ha-within-azure" title="Permalink to this headline">¶</a></h1>
+<p>In this task you will perform a system failover and validate that the
+WordPress application remains available.</p>
+<ol class="arabic">
+<li><p class="first">Open two separate <em>private</em> browser windows</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Use private browser windows to have both GUIs open at the same time.
+Since both BIG-IPs have the same IP, you cannot have two GUIs opened
+at the same time in one browser (it saves cookies).</p>
+</div>
+</li>
+<li><p class="first">Connect to the BIG-IP0 using https://&lt;public-IP&gt;:8443</p>
+</li>
+<li><p class="first">Go to <strong>Device Management -&gt; Devices</strong></p>
+<a class="reference internal image-reference" href="../../_images/image135.png"><img alt="../../_images/image135.png" src="../../_images/image135.png" style="width: 1087.0px; height: 483.0px;" /></a>
+</li>
+<li><p class="first">Select <strong>bigip0.azure.local (Self)</strong></p>
+<a class="reference internal image-reference" href="../../_images/image136.png"><img alt="../../_images/image136.png" src="../../_images/image136.png" style="width: 717.0px; height: 705.5px;" /></a>
+</li>
+<li><p class="first">Scroll to the bottom of the page</p>
+</li>
+<li><p class="first">Click <strong>Force Offline</strong></p>
+</li>
+<li><p class="first">Observe that you can still access WordPress.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Traffic flow is successful because the Azure LB is routing traffic
+to the other F5 instance.</p>
+</div>
+<p>Try forcing both F5 BIG-IPs offline and access the WordPress site again.</p>
+</li>
+<li><p class="first">Connect to the BIG-IP1 using https://&lt;public-IP&gt;:8444 and repeat the
+same <strong>Force Offline</strong> procedure</p>
+<ul class="simple">
+<li>Go to <strong>Device Management -&gt; Devices</strong></li>
+<li>Select <strong>bigip0.azure.local (Self)</strong></li>
+<li>Scroll to the bottom of the page</li>
+<li>Click <strong>Force Offline</strong></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Were you able to access WordPress?</p>
+</div>
+<p>The next test is to bring one or both F5 instances back online and then
+test WordPress again.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You will need to “Release Offline” one of the BIG-IPs.</p>
+</div>
+</li>
+<li><p class="first">Connect to the BIG-IP1 using https://&lt;public-IP&gt;:8444</p>
+</li>
+<li><p class="first">Go to <strong>Device Management</strong></p>
+</li>
+<li><p class="first">Select <strong>bigip1.azure.com (Self)</strong></p>
+</li>
+<li><p class="first">Scroll to the bottom of the page</p>
+</li>
+<li><p class="first">Click <strong>Release Offline</strong></p>
+<a class="reference internal image-reference" href="../../_images/image137.png"><img alt="../../_images/image137.png" src="../../_images/image137.png" style="width: 836.0px; height: 819.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Can you access the site now? Check that http://&lt;public-IP&gt; is available.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="task-lab-3-teardown">
+<h1>2.3.7. Task – Lab 3 Teardown<a class="headerlink" href="#task-lab-3-teardown" title="Permalink to this headline">¶</a></h1>
+<p>Please revoke BIG-IP license for reuse in next lab then delete lab resource group.</p>
+<ol class="arabic">
+<li><p class="first">Revoke BIG-IP license for resuse in next lab.</p>
+<ul class="simple">
+<li>From BIG-IP GUI select <strong>System -&gt; License</strong> then select <strong>revoke</strong>.</li>
+</ul>
+</li>
+<li><p class="first">Delete resource group <strong>bigipuser&lt;student number&gt;-aa</strong> and created earlier in this lab.</p>
+<ul class="simple">
+<li>From Azure Portal select <strong>Resource Group</strong></li>
+<li>Select <strong>…</strong> on right side of the resource group created earlier</li>
+<li>Select <strong>delete</strong>.  You will be prompted to enter resource again for confirmation.</li>
+</ul>
+</li>
+<li><p class="first">Enter resource group name when prompted for resource group to be deleted.</p>
+<a class="reference internal image-reference" href="../../_images/image56.gif"><img alt="../../_images/image56.gif" src="../../_images/image56.gif" style="width: 93.5px; height: 93.5px;" /></a>
+</li>
+</ol>
+<p><strong>This concludes Lab 3</strong></p>
+</div>
+<div class="section" id="appendix-troubleshooting">
+<h1>2.3.8. Appendix – Troubleshooting<a class="headerlink" href="#appendix-troubleshooting" title="Permalink to this headline">¶</a></h1>
+<p>[azureuser&#64;bigip0:Active:In Sync] ~ # tmsh run cm sniff-updates</p>
+<p>Listening for commit_id_update on -i internal:h port 6699 (^C to exit)</p>
+<p>[10:30:53] bigip0.azure.local (v13.0.0) -&gt; bigip-azure-sync-failover:
+UPDATE CID 75.0 (bigip0.azure.local) at 10:30:53 FORCE_SYNC</p>
+<p>[10:30:53] 10.10.1.101:42506 -&gt; bigip-azure-sync-failover: SYNC_REQ CID
+1.0 (bigip0.azure.local) at 10:25:34</p>
+<p>[10:30:53] bigip1.azure.local (v13.0.0) -&gt; bigip-azure-sync-failover:
+UPDATE CID 75.0 (bigip0.azure.local) at 10:30:53 FORCE_SYNC</p>
+<p>[10:32:27] bigip1.azure.local (v13.0.0) -&gt; bigip-azure-sync-failover:
+UPDATE CID 31.0 (bigip1.azure.local) at 10:32:27 FORCE_SYNC</p>
+<p>[10:32:27] 10.10.1.100:59354 -&gt; bigip-azure-sync-failover: SYNC_REQ CID
+75.0 (bigip0.azure.local) at 10:30:53</p>
+<p>[10:32:27] bigip0.azure.local (v13.0.0) -&gt; bigip-azure-sync-failover:
+UPDATE CID 31.0 (bigip1.azure.local) at 10:32:27 FORCE_SYNC</p>
+</div>
+
+
+        
+		     <div class="row next-prev-btn-row">
+           <div class="col-lg-12">
+           
+		        <a href="module3.html" title="2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+           
+           
+		     </div>
+         </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="content-fluid pre-footer">
+            <div class="blocks-container">
+              <div class="block">
+                <h3>Support Programs</h3>
+                <p>Regionally located support centers enable F5 to provide support in a number of languages through native-speaking support engineers.</p>
+                <a class="btn internalLink" data-ng-href="https://f5.com/support/support-offerings" target="_blank" href="https://f5.com/support/support-offerings">See more
+                  <span class="icon-1x-right icon-new-window" data-icon="new-window">​</span>
+                </a>
+              </div>
+              <div class="block">
+                <h3>Contact Support</h3>
+                <p>
+                  North America: 1-888-882-7535<br>
+                  Outside North America: 800-11-275-435
+                </p>
+                <a class="btn internalLink" data-ng-href="https://f5.com/about-us/contact#regional-support" target="_blank" href="https://f5.com/about-us/contact#regional-support">Local Support Numbers
+                  <span class="icon-1x-right icon-new-window" data-icon="new-window">​</span>
+                </a>
+              </div>
+              <div class="block">
+                <h3>Feedback and Help</h3>
+                <p>Have questions, suggestions, or just want to get something off your chest? Let us know.</p>
+                <a class="btn" data-ui-sref="siteFeedback" target="_blank" href="https://support.f5.com/csp/siteFeedback">Leave feedback</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="footer">
+            <div class="container">
+              <div class="col-sm-3 col-md-2">
+                <h4>About F5</h4>
+                <ul>
+                  <li><a data-ng-href="https://f5.com/about-us/contact" target="_blank" data-link-type="footer" href="https://f5.com/about-us/contact" class="internalLink">Contact F5</a>
+                  </li>
+                  <li><a data-ng-href="https://f5.com/about-us/careers" target="_blank" data-link-type="footer" href="https://f5.com/about-us/careers" class="internalLink">Careers</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-sm-3 col-md-2">
+                <h4>Education</h4>
+                <ul>
+                  <li><a data-ng-href="https://f5.com/education/training" target="_blank" data-link-type="footer" href="https://f5.com/education/training" class="internalLink">Training</a>
+                  </li>
+                  <li><a data-ng-href="https://f5.com/education/certification" target="_blank" data-link-type="footer" href="https://f5.com/education/certification" class="internalLink">Certification</a>
+                  </li>
+                  <li><a data-ng-href="https://f5.com/education/training/free-courses" target="_blank" data-link-type="footer" href="https://f5.com/education/training/free-courses" class="internalLink">Free Online Training</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col-sm-3 col-md-2">
+                <h4>F5 sites</h4>
+                <ul>
+                <li><a data-ng-href="https://f5.com" target="_blank" data-link-type="footer" href="https://f5.com" class="internalLink">F5.com</a>
+                </li>
+                <li><a data-ng-href="https://devcentral.f5.com" target="_blank" data-link-type="footer" href="https://devcentral.f5.com" class="internalLink">Community</a>
+                </li>
+                <li><a data-ng-href="https://partners.f5.com" target="_blank" data-link-type="footer" href="https://partners.f5.com" class="internalLink">Partners</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-3 col-md-2">
+            <h4>Support Tasks</h4>
+            <ul>
+                <li><a data-ui-sref="mySupport.createServiceRequest" data-link-type="footer" href="https://support.f5.com/csp/my-support/service-request">Create Service Request </a>
+                </li>
+                <li><a data-ng-href="https://f5.com/about-us/contact#regional-support" target="_blank" data-link-type="footer" href="https://f5.com/about-us/contact#regional-support" class="internalLink">Contact Support</a>
+                </li>
+                <li><a data-ui-sref="siteFeedback" target="_blank" data-link-type="footer" href="https://support.f5.com/csp/siteFeedback">Leave feedback [+]</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-md-3 right">
+            <h4>Connect with us</h4>
+            <ul class="social_icons">
+                <li><a href="//twitter.com/f5networks" target="_blank" data-name="twitter" data-type="" data-prefix="social" data-utf="E032" title="Twitter" class="externalLink"><i class="icon-1x icon-twitter icon-inverse-circle" data-link-type="footer"></i></a></li>
+                <li><a href="//www.linkedin.com/companies/f5-networks" target="_blank" class="linkedin externalLink" title="LinkedIn"><i class="icon-1x icon-linkedin icon-inverse-circle" data-link-type="footer"></i></a></li>
+                <li><a href="//www.facebook.com/f5networksinc" target="_blank" class="facebook externalLink" title="Facebook"><i class="icon-1x icon-facebook icon-inverse-circle" data-link-type="footer"></i></a></li>
+                <li><a href="//www.youtube.com/f5networksinc" target="_blank" class="youtube externalLink" title="YouTube"><i class="icon-1x icon-youtube icon-inverse-circle" data-link-type="footer"></i></a></li>
+                <li><a data-ng-href="https://devcentral.f5.com" target="_blank" class="devcentral internalLink" title="DevCentral" href="https://devcentral.f5.com"><i class="icon-1x icon-dc-pos icon-inverse-circle" data-link-type="footer"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="content-fluid left">
+            <div class="col-xs-12">
+                <p>
+                    © Copyright <span class="ng-binding">2017</span> by F5 Networks, Inc. |
+                    <a data-ng-href="https://f5.com/about-us/policies" target="_blank" data-link-type="footer" href="https://f5.com/about-us/policies" class="internalLink">Policies</a> |
+                    <a data-ng-href="https://f5.com/about-us/policies/trademarks" target="_blank" data-link-type="footer" href="https://f5.com/about-us/policies/trademarks" class="internalLink">Trademarks</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+</footer>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="../../_static/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    jQuery.noConflict(true)
+  </script>
+  </body>
+</html>
