@@ -12,7 +12,7 @@ deployment.
 #. Click on **Virtual network**
 
    .. image:: /_static/image57.png
-      :height: 200px
+      :height: 400px
 
    Use the information provided in Table 2.1 below to create a virtual network.
 
@@ -35,7 +35,7 @@ deployment.
    +-----------------------+---------------------------------------+
 
    .. image:: /_static/image58.png
-      :height: 450px
+      :height: 500px
 
 #. Click **Create**
 
@@ -56,7 +56,7 @@ the Microsoft Azure Portal.
 #. Select **WordPress Certified by Bitnami**
 
    .. image:: /_static/image33.png
-      :height: 250px
+      :height: 350px
 
 #. Click on **Create** at the bottom of the screen
 
@@ -68,15 +68,13 @@ the Microsoft Azure Portal.
    +-----------------------+-------------------------------------------------+
    | Key                   | Value                                           |
    +=======================+=================================================+
-   | Name                  | user<student number>wordpress                   |
+   | Virtual Machine Name  | user<student number>wordpress                   |
    +-----------------------+-------------------------------------------------+
    | VM disk type          | SSD                                             |
    +-----------------------+-------------------------------------------------+
    | User name             | f5bigipuser<student number>                     |
    +-----------------------+-------------------------------------------------+
-   | Authentication type   | SSH public key                                  |
-   +-----------------------+-------------------------------------------------+
-   | SSH public key        | From Lab 1, Task 1                              |
+   | Password              | ChangeMeNow123                                  |
    +-----------------------+-------------------------------------------------+
    | Subscription          | <User Unique>                                   |
    +-----------------------+-------------------------------------------------+
@@ -86,74 +84,33 @@ the Microsoft Azure Portal.
    +-----------------------+-------------------------------------------------+
 
    .. image:: /_static/image59.png
-      :height: 300px
-
-#. Click **OK** at the bottom of the page
-
-   Use the information in Table 2.3 to complete the “Choose a size”
-   configuration page during this deployment.
-
-   Table 2.3
-
-   +-------------+------------+
-   | Key         | Value      |
-   +=============+============+
-   | Disk Type   | HDD        |
-   +-------------+------------+
-   | Size        | A1 Basic   |
-   +-------------+------------+
-
-#. Choose **A1 Basic**
-
-   .. image:: /_static/image35.png
-      :height: 300px
-
-#. Click **Select**
-
-   Use the information in Table 2.4 to complete the “Settings” configuration
-   page during this deployment.
-
-   .. NOTE::
-      On the Settings page you’ll see a warning concerning the VM size
-      chosen.
-
-   Table 2.4
-
-   +---------------------+---------+
-   | Key                 | Value   |
-   +=====================+=========+
-   | Storage Type        | HDD     |
-   +---------------------+---------+
-   | Use managed disks   | No      |
-   +---------------------+---------+
-
-#. Change the "Disk type" to **HDD**
-#. Set “Use managed disk” to **No**
-#. Keep the other configurations unmodified
-
-   .. image:: /_static/image60.png
       :height: 400px
 
-#. Click **OK**
+#. Click **Review and Create ** at the bottom of the page
+
 #. Verify the summary
 
    .. image:: /_static/image37-top.png
-      :height: 200px
+      :height: 400px
 
-#. Supply your email and phone number for validation
+#. Supply your **email and phone number** for validation
 
    .. image:: /_static/lab-instance-validation.png
-      :height: 200px
+      :height: 400px
 
-#. Click **Purchase** or **Create**
+#. Click **Create**
 #. Go to **Resource groups** and click on your resource group
+
+   .. image:: /_static/image-61.png
+      :height: 400px
+
 #. Select your WordPress “Public IP address”
 
    .. image:: /_static/image61.png
-      :height: 300px
+      :height: 600px
 
    .. image:: /_static/image62.png
-      :height: 200px
+      :height: 600px
 
    .. Note::
       Remember the WordPress public IP address. This will be used in
@@ -170,19 +127,17 @@ launch a simple SQL Injection attack.
 #. Navigate to the **Search** box. You can do this via two methods:
 
    - Scrolling down the page with the browser scroll bars
-   - Or...
-
-     - Click the **X** in the lower right corner of the screen
-     - Close the **Manage** link
-     - Click the arrow in bottom right corner of the screen
-
-#. In the search box, enter the string ``'or 1=1#`` to launch the SQL
-   Injection attack.
 
    .. image:: /_static/image63.png
       :scale: 50 %
 
-#. Hit **Enter**
+#. In the search box, enter the string ``'or 1=1#`` to launch the SQL
+   Injection attack.
+
+   .. image:: /_static/image63-1.png
+      :scale: 50 %
+
+#. Click **Search**
 #. Perform this task several times to simulate an attack
 
    Although the WordPress application does not respond with any records,
