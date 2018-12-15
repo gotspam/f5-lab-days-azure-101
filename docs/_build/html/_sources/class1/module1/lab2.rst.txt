@@ -1,39 +1,408 @@
-Lab – Install a |bip| |ve| image on a Hypervisor
-------------------------------------------------
+Task – Deploy a new F5 BIG-IP VE in Azure
+-----------------------------------------
 
-.. TODO:: Needs lab description
+#. Log into the portal – https://portal.azure.com using the student## account assigned.
 
-In the previous lab we learned how to download the |bip| |ve| image.  Now, we
-can install the image onto a hypervisor.
+   .. image:: /_static/image008.png
+      :height: 50px
 
-Task – Upload the image to your Hypervisor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#. Click the green **+** sign at the top left corner of the screen
+#. Search the marketplace by typing 'F5 Better' in the search field and hit **Enter**.
+   Take your time to view the different F5 products available.
 
-.. TODO:: Needs task description
+#. Click **F5 BIG-IP ADC BETTER – BYOL**
 
-In this task you will upload the image to your hypervisor.
+   .. image:: /_static/image9.png
+      :height: 50px
 
-Follow these steps to complete this task:
+   .. NOTE::
+      An appropriate license is delivered by your lab proctor. The proctor
+      will explain why you use **BYOL** in this lab.
 
-.. rst-class:: task-stepsx
+#. At the bottom of the next page, selected **Resource Manager** as the
+   deployment model
 
-#. Open your hypervisor management console
-#. Figure out how to upload the image
+#. Click **Create**
 
-   .. ERROR:: These are bad instructions...
+   You will now start the deployment process. Use the information provided
+   in Table 1.1 below to complete the “Create virtual machine” Basics page.
 
-#. Great!  You're done
+   Table 1.1
 
-Task – Start a |bip| |ve| Instance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   +-----------------------+----------------------------------------+
+   | Key                   | Value                                  |
+   +=======================+========================================+
+   | BIG-IP Image          | F5 BIG-IP ADC BETTER – BYOL            |
+   +-----------------------+----------------------------------------+
+   | Deployment Model      | Resource Manager                       |
+   +-----------------------+----------------------------------------+
+   | Name                  | f5bigipuser<student number>bigip1      |
+   +-----------------------+----------------------------------------+
+   | VM disk type          | SSD                                    |
+   +-----------------------+----------------------------------------+
+   | User name             | f5bigipuser<student number>            |
+   +-----------------------+----------------------------------------+
+   | Authentication Type   | SSH public key                         |
+   +-----------------------+----------------------------------------+
+   | SSH public key        | From Lab 1, Task 1                     |
+   +-----------------------+----------------------------------------+
+   | Subscription          | <User Unique>                          |
+   +-----------------------+----------------------------------------+
+   | Resource group        | Create new                             |
+   +-----------------------+----------------------------------------+
+   | Resource group name   | f5bigipuser<student number>usergroup   |
+   +-----------------------+----------------------------------------+
+   | Location              | <Closest Azure DC>                     |
+   +-----------------------+----------------------------------------+
 
-.. TODO:: Needs task description
+   Example:
 
-In this task we will start and instance of |bip| using the image uploaded in
-the previous task.
+   .. image:: /_static/image11.png
+      :height: 400px
 
-Follow these steps to complete this task:
+#. Once done, click **OK**
 
-#. Open your hypervisor management console
-#. Click the |bip| image
-#. Click the 'Start' button (or it's equivalent)
+   You now need to select the Virtual Machine disk type and image size.
+   Using the information in Table 1.2 complete the “Size” page.
+
+   .. NOTE::
+      For a complete list of compatible Azure instance sizes, refer to
+      the “BIG-IP Virtual Edition and Microsoft Azure: Setup” guide.
+
+   Table 1.2
+
+   +-------------+-------------------+
+   | Key         | Value             |
+   +=============+===================+
+   | Disk Type   | HDD               |
+   +-------------+-------------------+
+   | Size        | D2\_V2 Standard   |
+   +-------------+-------------------+
+
+#. Search **D2** from “Choose a size”
+#. Select **D2\_V2 Standard**
+
+   .. image:: /_static/image13.png
+      :height: 300px
+
+#. Click **Select**
+
+   In the “Settings” page, provide the remaining information required for
+   the BIG-IP deployment and associated resources. Using the information in
+   Table 1.3 to complete the “Settings” page.
+
+   Table 1.3
+
+   +---------------------+---------+
+   | Key                 | Value   |
+   +=====================+=========+
+   | Storage Type        | HDD     |
+   +---------------------+---------+
+   | Use managed disks   | No      |
+   +---------------------+---------+
+   | Public Inbound ports| HTTPS   |
+   +---------------------+---------+
+#. Under Settings, change "Disk type" to **HDD** and "Use managed disk" to **No**
+
+   Look around at the various configurable items but leave them unchanged.
+
+   .. image:: /_static/image14.png
+      :height: 300px
+
+#. Once done, click **OK**
+#. Review the "Summary" page and the purchase you are about to make
+
+   .. Note:: In the screenshot below:
+
+      -  Notice “Validation passed”
+      -  Notice the F5 license BYOL is *not* charged
+      -  Notice the VM where the BIG-IP VE will reside is charged
+
+   .. image:: /_static/image15-top.png
+      :height: 300px
+
+#. Supply your email and phone number for validation
+
+   .. image:: /_static/lab-instance-validation.png
+      :height: 200px
+
+#. Click **Create**
+
+Task – Allow management and HTTP access to the BIG-IP
+-----------------------------------------------------
+
+In this task you will permit management access and HTTPS access to the
+BIG-IP by modifying the Network Security Group “Inbound” network access
+rule set.
+
+#. Go to **Resource groups**
+
+   .. image:: /_static/image16.png
+      :height: 200px
+
+#. Expand your Resource group and select the Network security group
+
+   .. image:: /_static/image17.png
+      :height: 300px
+
+#. Review the existing ruleset. Notice that you only have an inbound
+   rule allowing SSH.
+
+   .. image:: /_static/image18.png
+      :height: 300px
+
+   Now you will add rules to allow HTTPS for F5 BIG-IP management and
+   data plane by clicking on “Inbound security rules”
+   (to the left of the screen below).
+
+#. Click **Inbound security rules**
+
+   .. image:: /_static/image19.png
+      :height: 200px
+
+#. Click **+ Add**
+
+   .. image:: /_static/image20.png
+      :scale: 50 %
+
+   Using the information provided in Table 1.4, add a rule to allow F5
+   BIG-IP management traffic.
+
+   Table 1.4
+
+   +--------------------+-------------------+
+   | Key                | Value             |
+   +====================+===================+
+   | Source             | Any               |
+   +--------------------+-------------------+
+   | Source Port        | \*                |
+   +--------------------+-------------------+
+   | Destination        | Any               |
+   +--------------------+-------------------+
+   | Destination Port   | 8443              |
+   +--------------------+-------------------+
+   | Protocol           | Any               |
+   +--------------------+-------------------+
+   | Action             | Allow             |
+   +--------------------+-------------------+
+   | Priority           | 100               |
+   +--------------------+-------------------+
+   | Name               | f5-allow-mgmt     |
+   +--------------------+-------------------+
+
+   .. image:: /_static/image21.png
+      :scale: 50 %
+
+#. Click **OK**
+#. Repeat the previous step to add another rule using the information
+   provided in Table 1.5, this time allowing external HTTPS traffic via the
+   F5 BIG-IP.
+
+   Table 1.5
+
+   +--------------------+---------------------------+
+   | Key                | Value                     |
+   +====================+===========================+
+   | Source             | Any                       |
+   +--------------------+---------------------------+
+   | Source Port        | \*                        |
+   +--------------------+---------------------------+
+   | Destination        | Any                       |
+   +--------------------+---------------------------+
+   | Destination Port   | 443                       |
+   +--------------------+---------------------------+
+   | Protocol           | Any                       |
+   +--------------------+---------------------------+
+   | Action             | Allow                     |
+   +--------------------+---------------------------+
+   | Priority           | 101                       |
+   +--------------------+---------------------------+
+   | Name               | f5-allow-external-https   |
+   +--------------------+---------------------------+
+
+#. When complete, verify the end results look as follows:
+
+   .. image:: /_static/image22.png
+      :scale: 50 %
+
+#. Connect to the F5 GUI by going to \https://<F5-BIG-IP-public-IP>:8443
+#. Accept the SSL certificate warning
+#. Log into the BIG-IP using the credentials configured in the previous steps
+
+   .. image:: /_static/image31.png
+      :scale: 50 %
+
+#. Click **Log in**
+
+
+#. Go to **Resource groups** and click on your resource group
+#. Select your WordPress “Public IP address”
+
+   .. image:: /_static/image38.png
+      :scale: 50 %
+
+   .. image:: /_static/image39.png
+      :scale: 50 %
+
+   .. Note::
+      Remember the WordPress public IP address. This will be used in
+      subsequent steps.
+
+   Go ahead and test access to the WordPress public IP with SSH and HTTPS.
+
+
+#. Verify that \https://<WordPress-Public-IP> displays the
+   Wordpress blog
+
+   - You may have to accept the security warning
+
+   .. image:: /_static/image42.png
+      :scale: 50 %
+
+   You now need to modify the Network security group to remove direct
+   inbound access to the WordPress application. Let's go back to the
+   Microsoft Azure portal.
+
+#. Go to **Resource groups** and click on your resource group
+#. Select your WordPress Network security group
+
+   .. image:: /_static/image43.png
+      :scale: 50 %
+
+#. Remove the HTTP and HTTPS inbound rules while leaving only SSH access
+
+   .. Note::
+      You will only allow web access to the WordPress blog via the F5 BIG-IP.
+
+   .. image:: /_static/image44.png
+      :scale: 50 %
+
+#. Click on the **…** link at the far right side of the rule to be deleted
+
+   .. image:: /_static/image45.png
+      :scale: 50 %
+
+#. Click **Delete**
+#. Confirm the delete action when prompted by clicking **Yes**
+#. Now it's time to confirm web access has been restricted to WordPress.
+   Open a private browser window (not a normal window...choose **private**)
+#. Verify that \https://<WordPress-Public-IP> and \http://<WordPress-Public-IP>
+   do *NOT* display the WordPress blog
+
+   .. image:: /_static/image46.png
+      :scale: 50 %
+
+Task – Allow Internet access to WordPress through the BIG-IP
+------------------------------------------------------------
+
+In this task you will configure the BIG-IP with a Virtual Server and
+Pool to allow inbound Internet access to the WordPress application. First we
+need to identify the private IP address for the WordPress instance. Let's go
+back to the Microsoft Azure Portal.
+
+#. Select your WordPress Network Interface
+
+   .. image:: /_static/image47.png
+      :scale: 50 %
+
+   .. Note::
+      Remember WordPress private IP address. This will be used in
+      subsequent steps.
+
+   .. image:: /_static/image48.png
+      :scale: 50 %
+
+   This completes work in the Microsoft Azure Portal. You will now
+   configure the F5 BIG-IP.
+
+#. Connect to the BIG-IP using \https://<F5-public-IP>:8443
+#. From the BIG-IP GUI, go to **Local traffic -> Pools -> Pool List** and
+   click on the **+** sign. Configure the pool using the information
+   provided in Table 1.8 below leaving all other fields set to defaults.
+
+   Table 1.8
+
+   +-------------------+---------------------------------------+
+   | Key               | Value                                 |
+   +===================+=======================================+
+   | Name              | wordpress_pool                        |
+   +-------------------+---------------------------------------+
+   | Health Montitor   | HTTPS                                 |
+   +-------------------+---------------------------------------+
+   | Node Name         | wordpress                             |
+   +-------------------+---------------------------------------+
+   | Address           | <your WordPress private IP address>   |
+   +-------------------+---------------------------------------+
+   | Service Port      | 443                                   |
+   +-------------------+---------------------------------------+
+
+   .. image:: /_static/image49.png
+      :scale: 50 %
+
+#. Click **Finished**. When configured correctly, the pool status will be green.
+
+   .. image:: /_static/image50.png
+      :scale: 50 %
+
+   You now need to configure the Virtual server. To do this, you first need to
+   find the private IP of your F5 BIG-IP.
+
+#. From the BIG-IP GUI, go to **Network -> Self IPs** and note the IP Address
+
+   .. image:: /_static/image51.png
+      :scale: 50 %
+
+#. Create a virtual server by going to
+   **Local Traffic -> Virtual Servers -> Virtual Server List** and click
+   on the **+** sign. Configure the Virtual Server using the information
+   provided in Table 1.9 below leaving all other fields set to defaults.
+
+   Table 1.9
+
+   +------------------------------+-----------------------------------+
+   | Key                          | Value                             |
+   +==============================+===================================+
+   | Name                         | vs_wordpress                      |
+   +------------------------------+-----------------------------------+
+   | Destination Address          | <Self IP address of the BIG-IP>   |
+   +------------------------------+-----------------------------------+
+   | Service Port                 | 443                               |
+   +------------------------------+-----------------------------------+
+   | SSL Profile (Client)         | clientssl                         |
+   +------------------------------+-----------------------------------+
+   | SSL Profile (Server)         | serverssl                         |
+   +------------------------------+-----------------------------------+
+   | Source Address Translation   | Auto Map                          |
+   +------------------------------+-----------------------------------+
+   | Default Pool                 | wordpress_pool                    |
+   +------------------------------+-----------------------------------+
+
+   .. image:: /_static/image52.png
+      :scale: 50 %
+
+   .. image:: /_static/image53.png
+      :scale: 50 %
+
+#. Click **Finish**
+
+   You have now completed the BIG-IP configuration for the WordPress
+   application. To verify proper functionality, let's browse the site and
+   verify F5 statistics.
+
+#. Open a browser to to \https://<F5-public-VIP-IP> and ensure it
+   displays your WordPress blog.
+
+   .. NOTE::
+      As part of this task, you will see a certificate warning. You can
+      ignore this as in this lab you did not generate the server certificates.
+      In real life, you would ensure you have installed valid certificates.
+
+   .. image:: /_static/image54.png
+      :scale: 50 %
+
+#. Now check the statistics of your virtual server to verify traffic flow,
+   by navigating to **Statistics -> Module Statistics -> Local Traffic**
+#. Under **Statistics Type**, select **Virtual Servers**
+
+   .. image:: /_static/image55.png
+      :scale: 50 %

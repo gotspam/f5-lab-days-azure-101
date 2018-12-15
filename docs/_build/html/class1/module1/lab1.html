@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.1.1. Task – Create an SSH Key Pair &#8212; F5 Lab Days - Azure  documentation</title>
+    <title>2.1.1. Task – Setup basic cloud components in Azure &#8212; F5 Lab Days - Azure  documentation</title>
     
     <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -212,13 +212,12 @@
    <span class="caption-text">Current Page</span>
   </p>
   <ul>
-<li><a class="reference internal" href="#">2.1.1. Task – Create an SSH Key Pair</a></li>
-<li><a class="reference internal" href="#task-deploy-a-new-f5-big-ip-ve-in-azure">2.1.2. Task – Deploy a new F5 BIG-IP VE in Azure</a></li>
-<li><a class="reference internal" href="#task-allow-management-and-http-access-to-the-big-ip">2.1.3. Task – Allow management and HTTP access to the BIG-IP</a></li>
-<li><a class="reference internal" href="#task-license-and-apply-base-big-ip-configuration">2.1.4. Task – License and Apply Base BIG-IP Configuration</a></li>
-<li><a class="reference internal" href="#task-deploy-and-configure-wordpress-within-azure">2.1.5. Task – Deploy and configure WordPress within Azure</a></li>
-<li><a class="reference internal" href="#task-allow-internet-access-to-wordpress-through-the-big-ip">2.1.6. Task – Allow Internet access to WordPress through the BIG-IP</a></li>
-<li><a class="reference internal" href="#task-lab-1-teardown">2.1.7. Task – Lab 1 Teardown</a></li>
+<li><a class="reference internal" href="#">2.1.1. Task – Setup basic cloud components in Azure</a></li>
+<li><a class="reference internal" href="#task-deploy-wordpress-within-azure">2.1.2. Task – Deploy WordPress within Azure</a></li>
+<li><a class="reference internal" href="#task-deploy-a-new-f5-big-ip-ve-in-azure">2.1.3. Task – Deploy a new F5 BIG-IP VE in Azure</a></li>
+<li><a class="reference internal" href="#task-allow-management-and-https-access-to-the-big-ip">2.1.4. Task – Allow management and HTTPS access to the BIG-IP</a></li>
+<li><a class="reference internal" href="#task-allow-internet-access-to-wordpress-through-the-big-ip">2.1.5. Task – Allow Internet access to WordPress through the BIG-IP</a></li>
+<li><a class="reference internal" href="#task-disable-direct-internet-access-to-wordpress">2.1.6. Task – Disable direct Internet access to WordPress</a></li>
 </ul>
 
 
@@ -247,91 +246,24 @@
           <span class="right"><a href="../../genindex.html">Index</a></span>
         </h4>
         
-  <div class="section" id="task-create-an-ssh-key-pair">
-<h1>2.1.1. Task – Create an SSH Key Pair<a class="headerlink" href="#task-create-an-ssh-key-pair" title="Permalink to this headline">¶</a></h1>
-<p>Before you begin the deployment process, you first need to generate an
-SSH Key Pair which will be used for authentication to the F5 BIG-IPs in
-this and subsequent labs.</p>
-<div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Make sure to save both public and private keys (do not protect with passphrase) in an
-easily accessible place on your laptop.</p>
-</div>
-<p><strong>For Linux / Mac Users:</strong></p>
-<p>A terminal window or CLI is the preferred method.</p>
-<ol class="arabic simple">
-<li>Open the CLI and run <code class="docutils literal"><span class="pre">ssh-keygen</span> <span class="pre">-t</span> <span class="pre">rsa</span></code></li>
-<li>Enter file location <code class="docutils literal"><span class="pre">/tmp/azure</span></code></li>
-<li>Enter passphrase if needed (empty for no passphrase)</li>
-</ol>
-<p>Result:</p>
-<ul class="simple">
-<li>Your private key has been saved in /tmp/azure</li>
-<li>Your public key has been saved in /tmp/azure.pub</li>
-</ul>
-<p>Example private RSA key Linux / Mac:</p>
-<a class="reference internal image-reference" href="../../_images/image3.png"><img alt="../../_images/image3.png" src="../../_images/image3.png" style="height: 200px;" /></a>
-<p>Example public RSA key Linux / Mac:</p>
-<a class="reference internal image-reference" href="../../_images/image4.png"><img alt="../../_images/image4.png" src="../../_images/image4.png" style="height: 100px;" /></a>
-<p><strong>For Windows Users:</strong></p>
-<p>The PuTTY Key Generator is the preferred method. This is part of the PuTTY toolset.</p>
+  <div class="section" id="task-setup-basic-cloud-components-in-azure">
+<h1>2.1.1. Task – Setup basic cloud components in Azure<a class="headerlink" href="#task-setup-basic-cloud-components-in-azure" title="Permalink to this headline">¶</a></h1>
+<p>Basic cloud components are needed first. Things like Virtual Networks and
+Resource Groups are required prior to deployment of virtual machines.
+You will configure these items in preparation for the WordPress
+deployment.</p>
 <ol class="arabic">
-<li><p class="first">Open PuTTYgen</p>
+<li><p class="first">Log into the Microsoft Azure Portal – <a class="reference external" href="https://portal.azure.com">https://portal.azure.com</a></p>
 </li>
-<li><p class="first">Click <strong>Generate</strong></p>
-<a class="reference internal image-reference" href="../../_images/image5.png"><img alt="../../_images/image5.png" src="../../_images/image5.png" style="height: 300px;" /></a>
+<li><p class="first">Click the green <strong>+ Create a resource</strong> at the top left corner of the screen</p>
 </li>
-<li><p class="first">Click <strong>Save public key</strong> and <strong>Save private key</strong></p>
-<a class="reference internal image-reference" href="../../_images/image6.png"><img alt="../../_images/image6.png" src="../../_images/image6.png" style="height: 300px;" /></a>
-<p>Example public RSA key Windows:</p>
-<a class="reference internal image-reference" href="../../_images/image7.png"><img alt="../../_images/image7.png" src="../../_images/image7.png" style="height: 200px;" /></a>
+<li><p class="first">Click on <strong>Networking</strong></p>
 </li>
-</ol>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In future steps, making a connection to WordPress or BIG-IP via SSH will
-use the private key in PuTTY for authentication.</p>
-</div>
-</div>
-<div class="section" id="task-deploy-a-new-f5-big-ip-ve-in-azure">
-<h1>2.1.2. Task – Deploy a new F5 BIG-IP VE in Azure<a class="headerlink" href="#task-deploy-a-new-f5-big-ip-ve-in-azure" title="Permalink to this headline">¶</a></h1>
-<p>In this task you will deploy a new Azure Resource Group, F5 BIG-IP VE,
-and other supporting configuration items. Below is a list of items
-created during this step.</p>
-<ul class="simple">
-<li>Resource Group</li>
-<li>Virtual Machine for BIG-IP</li>
-<li>Network Interface for BIG-IP</li>
-<li>Public IP Address for BIG-IP</li>
-<li>Network Security Group</li>
-<li>Storage Account</li>
-<li>Virtual Network</li>
-</ul>
-<p>Let’s get started.</p>
-<ol class="arabic">
-<li><p class="first">Log into the portal – <a class="reference external" href="https://portal.azure.com">https://portal.azure.com</a> using the student## account assigned.</p>
-<a class="reference internal image-reference" href="../../_images/image008.png"><img alt="../../_images/image008.png" src="../../_images/image008.png" style="height: 50px;" /></a>
-</li>
-<li><p class="first">Click the green <strong>+</strong> sign at the top left corner of the screen</p>
-</li>
-<li><p class="first">Search the marketplace by typing ‘F5 Better’ in the search field and hit <strong>Enter</strong>.
-Take your time to view the different F5 products available.</p>
-</li>
-<li><p class="first">Click <strong>F5 BIG-IP ADC BETTER – BYOL</strong></p>
-<a class="reference internal image-reference" href="../../_images/image9.png"><img alt="../../_images/image9.png" src="../../_images/image9.png" style="height: 50px;" /></a>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">An appropriate license is delivered by your lab proctor. The proctor
-will explain why you use <strong>BYOL</strong> in this lab.</p>
-</div>
-</li>
-<li><p class="first">At the bottom of the next page, selected <strong>Resource Manager</strong> as the
-deployment model</p>
-</li>
-<li><p class="first">Click <strong>Create</strong></p>
-<p>You will now start the deployment process. Use the information provided
-in Table 1.1 below to complete the “Create virtual machine” Basics page.</p>
-<p>Table 1.1</p>
+<li><p class="first">Click on <strong>Virtual network</strong></p>
+<a class="reference internal image-reference" href="../../_images/image57.png"><img alt="../../_images/image57.png" src="../../_images/image57.png" style="width: 400.5px; height: 316.5px;" /></a>
+<p>Use the information provided in Table 2.1 below to create a virtual network.
+Replace <strong>##</strong> with your assigned student#.</p>
+<p>Table 2.1</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="37%" />
@@ -343,156 +275,210 @@ in Table 1.1 below to complete the “Create virtual machine” Basics page.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>BIG-IP Image</td>
-<td>F5 BIG-IP ADC BETTER – BYOL</td>
-</tr>
-<tr class="row-odd"><td>Deployment Model</td>
-<td>Resource Manager</td>
-</tr>
 <tr class="row-even"><td>Name</td>
-<td>f5bigipuser&lt;student number&gt;bigip1</td>
+<td>student##_vnet</td>
 </tr>
-<tr class="row-odd"><td>VM disk type</td>
-<td>SSD</td>
+<tr class="row-odd"><td>Address space</td>
+<td>10.10.0.0/16</td>
 </tr>
-<tr class="row-even"><td>User name</td>
-<td>f5bigipuser&lt;student number&gt;</td>
-</tr>
-<tr class="row-odd"><td>Authentication Type</td>
-<td>SSH public key</td>
-</tr>
-<tr class="row-even"><td>SSH public key</td>
-<td>From Lab 1, Task 1</td>
-</tr>
-<tr class="row-odd"><td>Subscription</td>
+<tr class="row-even"><td>Subscription</td>
 <td>&lt;User Unique&gt;</td>
 </tr>
-<tr class="row-even"><td>Resource group</td>
-<td>Create new</td>
-</tr>
-<tr class="row-odd"><td>Resource group name</td>
-<td>f5bigipuser&lt;student number&gt;usergroup</td>
+<tr class="row-odd"><td>Resource group</td>
+<td>Create new: student##-rg</td>
 </tr>
 <tr class="row-even"><td>Location</td>
 <td>&lt;Closest Azure DC&gt;</td>
 </tr>
-</tbody>
-</table>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image11.png"><img alt="../../_images/image11.png" src="../../_images/image11.png" style="height: 300px;" /></a>
-</li>
-<li><p class="first">Once done, click <strong>OK</strong></p>
-<p>You now need to select the Virtual Machine disk type and image size.
-Using the information in Table 1.2 complete the “Size” page.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For a complete list of compatible Azure instance sizes, refer to
-the “BIG-IP Virtual Edition and Microsoft Azure: Setup” guide.</p>
-</div>
-<p>Table 1.2</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="41%" />
-<col width="59%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Disk Type</td>
-<td>HDD</td>
-</tr>
-<tr class="row-odd"><td>Size</td>
-<td>D2_V2 Standard</td>
+<tr class="row-odd"><td>Address Range</td>
+<td>10.10.0.0/22</td>
 </tr>
 </tbody>
 </table>
+<a class="reference internal image-reference" href="../../_images/image58.png"><img alt="../../_images/image58.png" src="../../_images/image58.png" style="height: 550px;" /></a>
 </li>
-<li><p class="first">Search <strong>D2</strong> from “Choose a size”</p>
-</li>
-<li><p class="first">Select <strong>D2_V2 Standard</strong></p>
-<a class="reference internal image-reference" href="../../_images/image13.png"><img alt="../../_images/image13.png" src="../../_images/image13.png" style="height: 300px;" /></a>
-</li>
-<li><p class="first">Click <strong>Select</strong></p>
-<p>In the “Settings” page, provide the remaining information required for
-the BIG-IP deployment and associated resources. Using the information in
-Table 1.3 to complete the “Settings” page.</p>
-<p>Table 1.3</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="70%" />
-<col width="30%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Storage Type</td>
-<td>HDD</td>
-</tr>
-<tr class="row-odd"><td>Use managed disks</td>
-<td>No</td>
-</tr>
-<tr class="row-even"><td>Public Inbound ports</td>
-<td>HTTPS
-SSH</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p class="first">Under Settings, change “Disk type” to <strong>HDD</strong> and “Use managed disk” to <strong>No</strong></p>
-<p>Look around at the various configurable items but leave them unchanged.</p>
-<a class="reference internal image-reference" href="../../_images/image14.png"><img alt="../../_images/image14.png" src="../../_images/image14.png" style="height: 300px;" /></a>
-</li>
-<li><p class="first">Once done, click <strong>OK</strong></p>
-</li>
-<li><p class="first">Review the “Summary” page and the purchase you are about to make</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>In the screenshot below:</p>
-<ul class="last simple">
-<li>Notice “Validation passed”</li>
-<li>Notice the F5 license BYOL is <em>not</em> charged</li>
-<li>Notice the VM where the BIG-IP VE will reside is charged</li>
-</ul>
-</div>
-<a class="reference internal image-reference" href="../../_images/image15-top.png"><img alt="../../_images/image15-top.png" src="../../_images/image15-top.png" style="height: 300px;" /></a>
-</li>
-<li><p class="first">Supply your email and phone number for validation</p>
-<a class="reference internal image-reference" href="../../_images/lab-instance-validation.png"><img alt="../../_images/lab-instance-validation.png" src="../../_images/lab-instance-validation.png" style="height: 200px;" /></a>
-</li>
-<li><p class="first">Click <strong>Create</strong></p>
+<li><p class="first">Click <strong>Create</strong> then continue after “Deployment succeeded” notification.</p>
 </li>
 </ol>
 </div>
-<div class="section" id="task-allow-management-and-http-access-to-the-big-ip">
-<h1>2.1.3. Task – Allow management and HTTP access to the BIG-IP<a class="headerlink" href="#task-allow-management-and-http-access-to-the-big-ip" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="task-deploy-wordpress-within-azure">
+<h1>2.1.2. Task – Deploy WordPress within Azure<a class="headerlink" href="#task-deploy-wordpress-within-azure" title="Permalink to this headline">¶</a></h1>
+<p>In this task you will deploy a virtual machine and install the
+WordPress application.</p>
+<ol class="arabic">
+<li><p class="first">Click the green <strong>+ Create a resource</strong> sign at the top left corner of the screen</p>
+</li>
+<li><p class="first">Start searching the marketplace by typing ‘bitnami wordpress’ in the search field and hit <strong>Enter</strong></p>
+</li>
+<li><p class="first">Select <strong>WordPress Certified by Bitnami</strong></p>
+<a class="reference internal image-reference" href="../../_images/image33.png"><img alt="../../_images/image33.png" src="../../_images/image33.png" style="height: 450px;" /></a>
+</li>
+<li><p class="first">Click on <strong>Create</strong> at the bottom of the screen</p>
+<p>Use the information in Table 2.2 to complete the “Basics” configuration
+page during this deployment.</p>
+<p>Table 2.2</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Resource Group</td>
+<td>Use existing: student##-rg</td>
+</tr>
+<tr class="row-odd"><td>Virtual machine name</td>
+<td>student##-wp</td>
+</tr>
+<tr class="row-even"><td>Region</td>
+<td>&lt;Closest Azure DC&gt;</td>
+</tr>
+<tr class="row-odd"><td>Size</td>
+<td>Change: Basic A1</td>
+</tr>
+<tr class="row-even"><td>Authentication type</td>
+<td>Password</td>
+</tr>
+<tr class="row-odd"><td>Username</td>
+<td>azureuser</td>
+</tr>
+<tr class="row-even"><td>Password</td>
+<td>ChangeMeNow123</td>
+</tr>
+<tr class="row-odd"><td>Location</td>
+<td>&lt;Closest Azure DC&gt;</td>
+</tr>
+</tbody>
+</table>
+<a class="reference internal image-reference" href="../../_images/image59.png"><img alt="../../_images/image59.png" src="../../_images/image59.png" style="height: 500px;" /></a>
+</li>
+<li><p class="first">Click <strong>Review + create</strong> at the bottom of the page</p>
+</li>
+<li><p class="first">Supply your email and phone number for validation</p>
+<a class="reference internal image-reference" href="../../_images/lab-instance-validation.png"><img alt="../../_images/lab-instance-validation.png" src="../../_images/lab-instance-validation.png" style="height: 400px;" /></a>
+</li>
+<li><p class="first">Click <strong>Purchase</strong> or <strong>Create</strong>.  You will receive status “Deployment underway”.
+Continue on after receiving “Your deployment is complete”.</p>
+</li>
+<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
+</li>
+<li><p class="first">Select your WordPress “Public IP address”</p>
+<a class="reference internal image-reference" href="../../_images/image61.png"><img alt="../../_images/image61.png" src="../../_images/image61.png" style="height: 400px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image62.png"><img alt="../../_images/image62.png" src="../../_images/image62.png" style="height: 400px;" /></a>
+</li>
+<li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; displays the
+Wordpress blog</p>
+<ul class="simple">
+<li>You may have to accept the security warning</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember the WordPress public IP address. This will be used in
+subsequent steps.  This can take 10min before page loads.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="task-deploy-a-new-f5-big-ip-ve-in-azure">
+<h1>2.1.3. Task – Deploy a new F5 BIG-IP VE in Azure<a class="headerlink" href="#task-deploy-a-new-f5-big-ip-ve-in-azure" title="Permalink to this headline">¶</a></h1>
+<p>In this task you will deploy a virtual machine and install the
+BIG-IP.</p>
+<ol class="arabic">
+<li><p class="first">Click the green <strong>+ Create a resource</strong> sign at the top left corner of the screen</p>
+</li>
+<li><p class="first">Search the marketplace by typing ‘F5 Better’ in the search field and hit <strong>Enter</strong>.
+Take your time to view the different F5 products available.</p>
+</li>
+<li><p class="first">Click <strong>F5 BIG-IP Virtual Edition - BETTER (PAYG, 25Mbps)</strong></p>
+<a class="reference internal image-reference" href="../../_images/image9.png"><img alt="../../_images/image9.png" src="../../_images/image9.png" style="height: 400px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All hourly offerings include a 30 day free trial as well as access to F5 premium support.</p>
+</div>
+</li>
+<li><p class="first">Click <strong>Create</strong></p>
+<p>You will now start the deployment process. Use the information provided
+in Table 1.1 below to complete the “Create virtual machine” Basics page.</p>
+<p>Table 1.1</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Resource Group</td>
+<td>Use existing: student##-rg</td>
+</tr>
+<tr class="row-odd"><td>Virtual machine name</td>
+<td>student##-f5</td>
+</tr>
+<tr class="row-even"><td>Region</td>
+<td>&lt;Closest Azure DC&gt;</td>
+</tr>
+<tr class="row-odd"><td>Size</td>
+<td>Change: Standard DS2_v2</td>
+</tr>
+<tr class="row-even"><td>Authentication type</td>
+<td>Password</td>
+</tr>
+<tr class="row-odd"><td>Username</td>
+<td>azureuser</td>
+</tr>
+<tr class="row-even"><td>Password</td>
+<td>ChangeMeNow123</td>
+</tr>
+<tr class="row-odd"><td>Public inbound ports</td>
+<td>Allow selected ports</td>
+</tr>
+<tr class="row-even"><td>Selected inbound ports</td>
+<td>HTTPS</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<a class="reference internal image-reference" href="../../_images/image11.png"><img alt="../../_images/image11.png" src="../../_images/image11.png" style="height: 400px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image13.png"><img alt="../../_images/image13.png" src="../../_images/image13.png" style="height: 150px;" /></a>
+</li>
+<li><p class="first">Click <strong>Review + Create</strong></p>
+</li>
+<li><p class="first">Review the “Summary” page and the purchase you are about to make</p>
+</li>
+<li><p class="first">Supply your email and phone number for validation</p>
+<a class="reference internal image-reference" href="../../_images/image14.png"><img alt="../../_images/image14.png" src="../../_images/image14.png" style="height: 400px;" /></a>
+</li>
+<li><p class="first">Click <strong>Create</strong>.  You will receive status “Deployment underway”.
+Continue on after receiving “Your deployment is complete”.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="task-allow-management-and-https-access-to-the-big-ip">
+<h1>2.1.4. Task – Allow management and HTTPS access to the BIG-IP<a class="headerlink" href="#task-allow-management-and-https-access-to-the-big-ip" title="Permalink to this headline">¶</a></h1>
 <p>In this task you will permit management access and HTTPS access to the
 BIG-IP by modifying the Network Security Group “Inbound” network access
 rule set.</p>
 <ol class="arabic">
-<li><p class="first">Go to <strong>Resource groups</strong></p>
-<a class="reference internal image-reference" href="../../_images/image16.png"><img alt="../../_images/image16.png" src="../../_images/image16.png" style="height: 200px;" /></a>
-</li>
-<li><p class="first">Expand your Resource group and select the Network security group</p>
+<li><p class="first">Select the <strong>student##-f5-nsg</strong> Network security group</p>
 <a class="reference internal image-reference" href="../../_images/image17.png"><img alt="../../_images/image17.png" src="../../_images/image17.png" style="height: 300px;" /></a>
 </li>
-<li><p class="first">Review the existing ruleset. Notice that you only have an inbound
-rule allowing HTTPS and SSH.</p>
+<li><p class="first">Review the existing ruleset. Notice the default inbound rules and HTTPS
+selected during an earlier step.</p>
 <a class="reference internal image-reference" href="../../_images/image18.png"><img alt="../../_images/image18.png" src="../../_images/image18.png" style="height: 300px;" /></a>
-<p>Now you will add rules to allow HTTPS for F5 BIG-IP management and
-data plane by clicking on “Inbound security rules”
-(to the left of the screen below).</p>
+<p>Now you will add rules to allow HTTPS on port 8443 for F5 BIG-IP management
+by clicking on “Inbound security rules” (to the left of the screen below).</p>
 </li>
 <li><p class="first">Click <strong>Inbound security rules</strong></p>
 <a class="reference internal image-reference" href="../../_images/image19.png"><img alt="../../_images/image19.png" src="../../_images/image19.png" style="height: 200px;" /></a>
 </li>
 <li><p class="first">Click <strong>+ Add</strong></p>
-<a class="reference internal image-reference" href="../../_images/image20.png"><img alt="../../_images/image20.png" src="../../_images/image20.png" style="height: 200px;" /></a>
 <p>Using the information provided in Table 1.4, add a rule to allow F5
 BIG-IP management traffic.</p>
 <p>Table 1.4</p>
@@ -529,350 +515,46 @@ BIG-IP management traffic.</p>
 <td>100</td>
 </tr>
 <tr class="row-odd"><td>Name</td>
-<td>f5-allow-mgmt</td>
+<td>f5_mgmt_8443</td>
 </tr>
 </tbody>
 </table>
 <a class="reference internal image-reference" href="../../_images/image21.png"><img alt="../../_images/image21.png" src="../../_images/image21.png" style="height: 400px;" /></a>
 </li>
-<li><p class="first">Click <strong>OK</strong></p>
+<li><p class="first">Click <strong>Add</strong></p>
 </li>
 <li><p class="first">When complete, verify the end results look as follows:</p>
-<a class="reference internal image-reference" href="../../_images/image22.png"><img alt="../../_images/image22.png" src="../../_images/image22.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image22.png"><img alt="../../_images/image22.png" src="../../_images/image22.png" style="height: 200px;" /></a>
 </li>
-</ol>
-</div>
-<div class="section" id="task-license-and-apply-base-big-ip-configuration">
-<h1>2.1.4. Task – License and Apply Base BIG-IP Configuration<a class="headerlink" href="#task-license-and-apply-base-big-ip-configuration" title="Permalink to this headline">¶</a></h1>
-<p>In this task you will connect to the BIG-IP CLI and GUI, license the
-device, and complete a base configuration. First, you need to identify
-the BIG-IP’s public IP address to which you will connect.</p>
-<ol class="arabic">
-<li><p class="first">Return to the <strong>Resource group</strong></p>
+<li><p class="first">Select <strong>Resource Group &gt; student##-rg &gt; student##-f5</strong> then <strong>networking</strong>
+to view public and private address of the F5 BIG-IP virtual machine.</p>
+<a class="reference internal image-reference" href="../../_images/image20.png"><img alt="../../_images/image20.png" src="../../_images/image20.png" style="height: 300px;" /></a>
 </li>
-<li><p class="first">Select <strong>Network Interface</strong> to see the F5 BIG-IP’s private
-and public IP addresses</p>
-<a class="reference internal image-reference" href="../../_images/image23.png"><img alt="../../_images/image23.png" src="../../_images/image23.png" style="height: 200px;" /></a>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Remember the F5 BIG-IP’s public IP address. This will be used in
-subsequent steps.</p>
-</div>
-<a class="reference internal image-reference" href="../../_images/image24.png"><img alt="../../_images/image24.png" src="../../_images/image24.png" style="height: 200px;" /></a>
-</li>
-<li><p class="first">Wait until the deployment is completed. To view status, click on the
-bell symbol in the upper right corner of the screen. You will see
-“Deployments succeeded” under “Notifications”.</p>
-<a class="reference internal image-reference" href="../../_images/image25.png"><img alt="../../_images/image25.png" src="../../_images/image25.png" style="height: 200px;" /></a>
-<p>You now need to connect to the F5 BIG-IP CLI in order to license the F5
-BIG-IP, configure the hostname, create an admin account, and set the
-password.</p>
-</li>
-<li><p class="first">SSH to the F5 public IP address</p>
-<p><strong>Connectivity for Linux / Mac Users:</strong></p>
-<ul class="simple">
-<li>Open the CLI</li>
-<li>Connect using <code class="docutils literal"><span class="pre">ssh</span> <span class="pre">-i</span> <span class="pre">&lt;private_key&gt;</span> <span class="pre">f5bigipuser&lt;Student</span> <span class="pre">Number&gt;&#64;&lt;F5</span>
-<span class="pre">BIG-IP</span> <span class="pre">public</span> <span class="pre">IP&gt;</span></code></li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The reference to <strong>private_key</strong> is the file corresponding to the
-public key created during BIG-IP deployment by Azure. The f5bigipuserx
-is the user you created during the same step (“Create virtual machine/Basics”).</p>
-</div>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image26.png"><img alt="../../_images/image26.png" src="../../_images/image26.png" style="height: 100px;" /></a>
-<p><strong>Connectivity for Windows Users:</strong></p>
-<ul class="simple">
-<li>Open PuTTY</li>
-<li>Enter the public IP</li>
-<li>Go to <strong>Connection -&gt; SSH -&gt; Auth</strong></li>
-<li>Browse to the location of your private key</li>
-<li>Select <strong>Open</strong> to start the connection</li>
-</ul>
-<a class="reference internal image-reference" href="../../_images/image8.png"><img alt="../../_images/image8.png" src="../../_images/image8.png" style="height: 300px;" /></a>
-</li>
-<li><p class="first">Type <code class="docutils literal"><span class="pre">bash</span></code> then enter.</p>
-</li>
-<li><p class="first">License your F5 BIG-IP by typing <code class="docutils literal"><span class="pre">SOAPLicenseClient</span> <span class="pre">--basekey</span> <span class="pre">&lt;license&gt;</span></code></p>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image27.png"><img alt="../../_images/image27.png" src="../../_images/image27.png" style="height: 60px;" /></a>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">License key is provided by your instructor.</p>
-</div>
-</li>
-<li><p class="first">Change the hostname and replace x with the number assigned by
-your proctor</p>
-<div class="admonition-tmsh admonition">
-<p class="first admonition-title">TMSH</p>
-<p class="last">tmsh modify sys global-settings hostname f5bigipuserx.azure.local</p>
-</div>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image28.png"><img alt="../../_images/image28.png" src="../../_images/image28.png" style="width: 921.0px; height: 30.0px;" /></a>
-</li>
-<li><p class="first">Change the password for f5bigipuserx and replace x with the
-number assigned by your proctor</p>
-<div class="admonition-tmsh admonition">
-<p class="first admonition-title">TMSH</p>
-<p class="last">tmsh modify auth user f5bigipuserx password Demo123!</p>
-</div>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image29.png"><img alt="../../_images/image29.png" src="../../_images/image29.png" style="width: 833.0px; height: 30.0px;" /></a>
-</li>
-<li><p class="first">Wait until the system prompt changes to the following:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>f5bigipuserx@f5bigipuserx:Active:Standalone<span class="o">]</span> ~ <span class="c1">#</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Changes made in the CLI are not present in the running configuration
-until they are saved.</p>
-</div>
-</li>
-<li><p class="first">Save the system configuration</p>
-<div class="admonition-tmsh admonition">
-<p class="first admonition-title">TMSH</p>
-<p class="last">tmsh save sys config</p>
-</div>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image30.png"><img alt="../../_images/image30.png" src="../../_images/image30.png" style="width: 586.0px; height: 100.0px;" /></a>
-</li>
-<li><p class="first">Open your favorite web browser</p>
-</li>
-<li><p class="first">Connect to the F5 GUI by going to https://&lt;F5-BIG-IP-public-IP&gt;:8443</p>
+<li><p class="first">Connect to the F5 GUI by going to <strong>https://&lt;F5-BIG-IP-public-IP&gt;:8443</strong></p>
 </li>
 <li><p class="first">Accept the SSL certificate warning</p>
 </li>
-<li><p class="first">Log into the BIG-IP using the credentials configured in the previous steps</p>
-<a class="reference internal image-reference" href="../../_images/image31.png"><img alt="../../_images/image31.png" src="../../_images/image31.png" style="width: 661.0px; height: 416.0px;" /></a>
-</li>
-<li><p class="first">Click <strong>Log in</strong></p>
-</li>
-</ol>
-</div>
-<div class="section" id="task-deploy-and-configure-wordpress-within-azure">
-<h1>2.1.5. Task – Deploy and configure WordPress within Azure<a class="headerlink" href="#task-deploy-and-configure-wordpress-within-azure" title="Permalink to this headline">¶</a></h1>
-<p>In this task you will deploy another virtual machine and install the
-WordPress application to be placed behind the BIG-IP. Let’s go back to
-the Microsoft Azure Portal.</p>
-<ol class="arabic">
-<li><p class="first">Click the green <strong>+</strong> sign at the top left corner of the screen</p>
-</li>
-<li><p class="first">Start searching the marketplace by typing ‘bitnami wordpress’ in the
-search field and hit <strong>Enter</strong></p>
-<a class="reference internal image-reference" href="../../_images/image32.png"><img alt="../../_images/image32.png" src="../../_images/image32.png" style="height: 150px;" /></a>
-</li>
-<li><p class="first">Select <strong>WordPress Certified by Bitnami</strong></p>
-<a class="reference internal image-reference" href="../../_images/image33.png"><img alt="../../_images/image33.png" src="../../_images/image33.png" style="height: 250px;" /></a>
-</li>
-<li><p class="first">Click on <strong>Create</strong> at the bottom of the screen</p>
-<p>Use the information in Table 1.6 to complete the “Basics” configuration
-page during this deployment.</p>
-<p>Table 1.6</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="34%" />
-<col width="66%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Name</td>
-<td>f5bigipuser&lt;student number&gt;wordpress</td>
-</tr>
-<tr class="row-odd"><td>VM disk type</td>
-<td>SSD</td>
-</tr>
-<tr class="row-even"><td>User name</td>
-<td>f5bigipuser&lt;student number&gt;</td>
-</tr>
-<tr class="row-odd"><td>Authentication type</td>
-<td>SSH public key</td>
-</tr>
-<tr class="row-even"><td>SSH public key</td>
-<td>From Lab 1, Task 1</td>
-</tr>
-<tr class="row-odd"><td>Subscription</td>
-<td>&lt;User Unique&gt;</td>
-</tr>
-<tr class="row-even"><td>Resource Group</td>
-<td>Use existing previously created in step 1</td>
-</tr>
-<tr class="row-odd"><td>Location</td>
-<td>&lt;Closest Azure DC&gt;</td>
-</tr>
-</tbody>
-</table>
-<a class="reference internal image-reference" href="../../_images/image34.png"><img alt="../../_images/image34.png" src="../../_images/image34.png" style="height: 450px;" /></a>
-</li>
-<li><p class="first">Click <strong>OK</strong> at the bottom of the page</p>
-<p>Use the information in Table 1.7 to complete the “Choose a size” configuration
-page during this deployment.</p>
-<p>Table 1.7</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="52%" />
-<col width="48%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Disk Type</td>
-<td>All</td>
-</tr>
-<tr class="row-odd"><td>Size</td>
-<td>A1 Basic</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p class="first">Choose <strong>A1 Basic</strong></p>
-<a class="reference internal image-reference" href="../../_images/image35.png"><img alt="../../_images/image35.png" src="../../_images/image35.png" style="height: 200px;" /></a>
-</li>
-<li><p class="first">Click <strong>Select</strong></p>
-<p>Use the information in Table 1.8 to complete the “Settings” configuration
-page during this deployment.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">On the Settings page you’ll see a warning concerning the VM size
-chosen.</p>
-</div>
-<p>Table 1.8</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="70%" />
-<col width="30%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Storage Type</td>
-<td>HDD</td>
-</tr>
-<tr class="row-odd"><td>Use managed disks</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p class="first">Change the “Disk type” to <strong>HDD</strong></p>
-</li>
-<li><p class="first">Set “Use managed disk” to <strong>No</strong></p>
-</li>
-<li><p class="first">Keep the other configurations unmodified</p>
-<a class="reference internal image-reference" href="../../_images/image36.png"><img alt="../../_images/image36.png" src="../../_images/image36.png" style="height: 400px;" /></a>
-</li>
-<li><p class="first">Click <strong>OK</strong></p>
-</li>
-<li><p class="first">Verify the summary</p>
-<a class="reference internal image-reference" href="../../_images/image37-top.png"><img alt="../../_images/image37-top.png" src="../../_images/image37-top.png" style="height: 250px;" /></a>
-</li>
-<li><p class="first">Supply your email and phone number for validation</p>
-<a class="reference internal image-reference" href="../../_images/lab-instance-validation.png"><img alt="../../_images/lab-instance-validation.png" src="../../_images/lab-instance-validation.png" style="height: 250px;" /></a>
-</li>
-<li><p class="first">Click <strong>Purchase</strong> or <strong>Create</strong></p>
-</li>
-<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
-</li>
-<li><p class="first">Select your WordPress “Public IP address”</p>
-<a class="reference internal image-reference" href="../../_images/image38.png"><img alt="../../_images/image38.png" src="../../_images/image38.png" style="height: 250px;" /></a>
-<a class="reference internal image-reference" href="../../_images/image39.png"><img alt="../../_images/image39.png" src="../../_images/image39.png" style="height: 200px;" /></a>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Remember the WordPress public IP address. This will be used in
-subsequent steps.</p>
-</div>
-<p>Go ahead and test access to the WordPress public IP with SSH and HTTPS.</p>
-</li>
-<li><p class="first">SSH to the WordPress public IP address</p>
-<p><strong>For Linux / Mac Users:</strong></p>
-<ul class="simple">
-<li>Open the CLI</li>
-<li>Connect using <code class="docutils literal"><span class="pre">ssh</span> <span class="pre">-i</span> <span class="pre">&lt;private_key&gt;</span> <span class="pre">f5bigipuser&lt;Student</span> <span class="pre">Number&gt;&#64;&lt;WordPress</span> <span class="pre">VM</span> <span class="pre">public</span> <span class="pre">IP&gt;</span></code></li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The reference to <strong>private_key</strong> is the file corresponding to the
-public key created during Wordpress deployment by Azure.</p>
-</div>
-<p>Example:</p>
-<a class="reference internal image-reference" href="../../_images/image40.png"><img alt="../../_images/image40.png" src="../../_images/image40.png" style="width: 639.0px; height: 403.0px;" /></a>
-<p><strong>For Windows Users:</strong></p>
-<ul class="simple">
-<li>Open PuTTY</li>
-<li>Enter the public IP</li>
-<li>Go to <strong>Connection -&gt; SSH -&gt; Auth</strong></li>
-<li>Browse to the location of your private key</li>
-<li>Select <strong>Open</strong> to start the connection</li>
-</ul>
-<a class="reference internal image-reference" href="../../_images/image8.png"><img alt="../../_images/image8.png" src="../../_images/image8.png" style="width: 452.0px; height: 431.0px;" /></a>
-</li>
-<li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; displays the
-Wordpress blog</p>
-<ul class="simple">
-<li>You may have to accept the security warning</li>
-</ul>
-<a class="reference internal image-reference" href="../../_images/image42.png"><img alt="../../_images/image42.png" src="../../_images/image42.png" style="width: 558.5px; height: 358.5px;" /></a>
-<p>You now need to modify the Network security group to remove direct
-inbound access to the WordPress application. Let’s go back to the
-Microsoft Azure portal.</p>
-</li>
-<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
-</li>
-<li><p class="first">Select your WordPress Network security group</p>
-<a class="reference internal image-reference" href="../../_images/image43.png"><img alt="../../_images/image43.png" src="../../_images/image43.png" style="width: 717.0px; height: 401.0px;" /></a>
-</li>
-<li><p class="first">Remove the HTTP and HTTPS inbound rules while leaving only SSH access</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You will only allow web access to the WordPress blog via the F5 BIG-IP.</p>
-</div>
-<a class="reference internal image-reference" href="../../_images/image44.png"><img alt="../../_images/image44.png" src="../../_images/image44.png" style="width: 918.0px; height: 192.0px;" /></a>
-</li>
-<li><p class="first">Click on the <strong>…</strong> link at the far right side of the rule to be deleted</p>
-<a class="reference internal image-reference" href="../../_images/image45.png"><img alt="../../_images/image45.png" src="../../_images/image45.png" style="width: 903.0px; height: 132.0px;" /></a>
-</li>
-<li><p class="first">Click <strong>Delete</strong></p>
-</li>
-<li><p class="first">Confirm the delete action when prompted by clicking <strong>Yes</strong></p>
-</li>
-<li><p class="first">Now it’s time to confirm web access has been restricted to WordPress.
-Open a private browser window (not a normal window…choose <strong>private</strong>)</p>
-</li>
-<li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; and http://&lt;WordPress-Public-IP&gt;
-do <em>NOT</em> display the WordPress blog</p>
-<a class="reference internal image-reference" href="../../_images/image46.png"><img alt="../../_images/image46.png" src="../../_images/image46.png" style="width: 770.0px; height: 495.0px;" /></a>
+<li><p class="first">Log into the BIG-IP using the credentials configured in the previous steps
+Username: azureuser
+Password: ChangeMeNow123</p>
 </li>
 </ol>
 </div>
 <div class="section" id="task-allow-internet-access-to-wordpress-through-the-big-ip">
-<h1>2.1.6. Task – Allow Internet access to WordPress through the BIG-IP<a class="headerlink" href="#task-allow-internet-access-to-wordpress-through-the-big-ip" title="Permalink to this headline">¶</a></h1>
+<h1>2.1.5. Task – Allow Internet access to WordPress through the BIG-IP<a class="headerlink" href="#task-allow-internet-access-to-wordpress-through-the-big-ip" title="Permalink to this headline">¶</a></h1>
 <p>In this task you will configure the BIG-IP with a Virtual Server and
 Pool to allow inbound Internet access to the WordPress application. First we
 need to identify the private IP address for the WordPress instance. Let’s go
 back to the Microsoft Azure Portal.</p>
 <ol class="arabic">
-<li><p class="first">Select your WordPress Network Interface</p>
-<a class="reference internal image-reference" href="../../_images/image47.png"><img alt="../../_images/image47.png" src="../../_images/image47.png" style="width: 718.5px; height: 353.5px;" /></a>
+<li><p class="first">Select <strong>Resource Group &gt; student##-rg &gt; student##-wp</strong> then <strong>networking</strong>
+to view public and private address of the F5 BIG-IP virtual machine.</p>
+<a class="reference internal image-reference" href="../../_images/image47.png"><img alt="../../_images/image47.png" src="../../_images/image47.png" style="width: 986.0px; height: 369.0px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Remember WordPress private IP address. This will be used in
 subsequent steps.</p>
 </div>
-<a class="reference internal image-reference" href="../../_images/image48.png"><img alt="../../_images/image48.png" src="../../_images/image48.png" style="width: 741.0px; height: 239.0px;" /></a>
-<p>This completes work in the Microsoft Azure Portal. You will now
-configure the F5 BIG-IP.</p>
 </li>
 <li><p class="first">Connect to the BIG-IP using https://&lt;F5-public-IP&gt;:8443</p>
 </li>
@@ -983,27 +665,36 @@ by navigating to <strong>Statistics -&gt; Module Statistics -&gt; Local Traffic<
 </li>
 </ol>
 </div>
-<div class="section" id="task-lab-1-teardown">
-<h1>2.1.7. Task – Lab 1 Teardown<a class="headerlink" href="#task-lab-1-teardown" title="Permalink to this headline">¶</a></h1>
-<p>Please revoke BIG-IP license for reuse in next lab then delete lab resource group.</p>
+<div class="section" id="task-disable-direct-internet-access-to-wordpress">
+<h1>2.1.6. Task – Disable direct Internet access to WordPress<a class="headerlink" href="#task-disable-direct-internet-access-to-wordpress" title="Permalink to this headline">¶</a></h1>
+<p>You now need to modify the Network security group to remove direct
+inbound access to the WordPress application.</p>
 <ol class="arabic">
-<li><p class="first">Revoke BIG-IP license for resuse in next lab.</p>
-<ul class="simple">
-<li>From BIG-IP GUI select <strong>System -&gt; License</strong> then select <strong>revoke</strong>.</li>
-</ul>
+<li><p class="first">Select <strong>Resource Group &gt; student##-rg &gt; student##-wp-nsg</strong> then <strong>inbound security rules</strong></p>
+<a class="reference internal image-reference" href="../../_images/image43.png"><img alt="../../_images/image43.png" src="../../_images/image43.png" style="width: 1085.0px; height: 284.0px;" /></a>
 </li>
-<li><p class="first">Delete resource group <strong>f5bigipuser&lt;student number&gt;usergroup</strong> created earlier in this lab.</p>
-<ul class="simple">
-<li>From Azure Portal select <strong>Resource Group</strong></li>
-<li>Select <strong>…</strong> on right side of the resource group created earlier</li>
-<li>Select <strong>delete</strong>.  You will be prompted to enter resource again for confirmation.</li>
-</ul>
+<li><p class="first">Remove the HTTP and HTTPS inbound rules while leaving only SSH access</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will only allow web access to the WordPress blog via the F5 BIG-IP.</p>
+</div>
+<a class="reference internal image-reference" href="../../_images/image44.png"><img alt="../../_images/image44.png" src="../../_images/image44.png" style="width: 918.0px; height: 192.0px;" /></a>
 </li>
-<li><p class="first">Enter resource group name when prompted for resource group to be deleted.</p>
-<a class="reference internal image-reference" href="../../_images/image56.gif"><img alt="../../_images/image56.gif" src="../../_images/image56.gif" style="width: 93.5px; height: 93.5px;" /></a>
+<li><p class="first">Click on the <strong>…</strong> link at the far right side of the rule to be deleted</p>
+<a class="reference internal image-reference" href="../../_images/image45.png"><img alt="../../_images/image45.png" src="../../_images/image45.png" style="width: 903.0px; height: 132.0px;" /></a>
+</li>
+<li><p class="first">Click <strong>Delete</strong></p>
+</li>
+<li><p class="first">Confirm the delete action when prompted by clicking <strong>Yes</strong></p>
+</li>
+<li><p class="first">Now it’s time to confirm web access has been restricted to WordPress.
+Open a private browser window (not a normal window…choose <strong>private</strong>)</p>
+</li>
+<li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; and http://&lt;WordPress-Public-IP&gt;
+do <em>NOT</em> display the WordPress blog</p>
+<a class="reference internal image-reference" href="../../_images/image46.png"><img alt="../../_images/image46.png" src="../../_images/image46.png" style="width: 770.0px; height: 495.0px;" /></a>
 </li>
 </ol>
-<p><strong>This concludes Lab 1</strong></p>
 </div>
 
 

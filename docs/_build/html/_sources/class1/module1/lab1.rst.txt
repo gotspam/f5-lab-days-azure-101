@@ -1,98 +1,131 @@
-Task – Create an SSH Key Pair
------------------------------
+Task – Setup basic cloud components in Azure
+--------------------------------------------
 
-Before you begin the deployment process, you first need to generate an
-SSH Key Pair which will be used for authentication to the F5 BIG-IPs in
-this and subsequent labs.
+Basic cloud components are needed first. Things like Virtual Networks and
+Resource Groups are required prior to deployment of virtual machines.
+You will configure these items in preparation for the WordPress
+deployment.
 
-.. HINT::
-   Make sure to save both public and private keys (do not protect with passphrase) in an
-   easily accessible place on your laptop.
+#. Log into the Microsoft Azure Portal – https://portal.azure.com
+#. Click the green **+ Create a resource** at the top left corner of the screen
+#. Click on **Networking**
+#. Click on **Virtual network**
 
-**For Linux / Mac Users:**
+   .. image:: /_static/image57.png
+      :scale: 50 %
 
-A terminal window or CLI is the preferred method.
+   Use the information provided in Table 2.1 below to create a virtual network.
+   Replace **##** with your assigned student#.
 
-#. Open the CLI and run ``ssh-keygen -t rsa``
-#. Enter file location ``/tmp/azure``
-#. Enter passphrase if needed (empty for no passphrase)
+   Table 2.1
 
-Result:
+   +-----------------------+---------------------------------------+
+   | Key                   | Value                                 |
+   +=======================+=======================================+
+   | Name                  | student##_vnet                        |
+   +-----------------------+---------------------------------------+
+   | Address space         | 10.10.0.0/16                          |
+   +-----------------------+---------------------------------------+
+   | Subscription          | <User Unique>                         |
+   +-----------------------+---------------------------------------+
+   | Resource group        | Create new: student##-rg              |
+   +-----------------------+---------------------------------------+
+   | Location              | <Closest Azure DC>                    |
+   +-----------------------+---------------------------------------+
+   | Address Range         | 10.10.0.0/22                          |
+   +-----------------------+---------------------------------------+
 
--  Your private key has been saved in /tmp/azure
--  Your public key has been saved in /tmp/azure.pub
+   .. image:: /_static/image58.png
+      :height: 550px
 
-Example private RSA key Linux / Mac:
+#. Click **Create** then continue after "Deployment succeeded" notification.
 
-.. image:: /_static/image3.png
-   :height: 200px
+Task – Deploy WordPress within Azure
+------------------------------------
 
-Example public RSA key Linux / Mac:
+In this task you will deploy a virtual machine and install the
+WordPress application.
 
-.. image:: /_static/image4.png
-   :height: 100px
+#. Click the green **+ Create a resource** sign at the top left corner of the screen
+#. Start searching the marketplace by typing 'bitnami wordpress' in the search field and hit **Enter**
+#. Select **WordPress Certified by Bitnami**
 
-**For Windows Users:**
+   .. image:: /_static/image33.png
+      :height: 450px
 
-The PuTTY Key Generator is the preferred method. This is part of the PuTTY toolset.
+#. Click on **Create** at the bottom of the screen
 
-#. Open PuTTYgen
-#. Click **Generate**
+   Use the information in Table 2.2 to complete the “Basics” configuration
+   page during this deployment.
 
-   .. image:: /_static/image5.png
-      :height: 300px
+   Table 2.2
 
-#. Click **Save public key** and **Save private key**
+   +-----------------------+-------------------------------------------------+
+   | Key                   | Value                                           |
+   +=======================+=================================================+
+   | Resource Group        | Use existing: student##-rg                      |
+   +-----------------------+-------------------------------------------------+
+   | Virtual machine name  | student##-wp                                    |
+   +-----------------------+-------------------------------------------------+
+   | Region                | <Closest Azure DC>                              |
+   +-----------------------+-------------------------------------------------+
+   | Size                  | Change: Basic A1                                |
+   +-----------------------+-------------------------------------------------+
+   | Authentication type   | Password                                        |
+   +-----------------------+-------------------------------------------------+
+   | Username              | azureuser                                       |
+   +-----------------------+-------------------------------------------------+
+   | Password              | ChangeMeNow123                                  |
+   +-----------------------+-------------------------------------------------+
+   | Location              | <Closest Azure DC>                              |
+   +-----------------------+-------------------------------------------------+
 
-   .. image:: /_static/image6.png
-      :height: 300px
+   .. image:: /_static/image59.png
+      :height: 500px
 
-   Example public RSA key Windows:
+#. Click **Review + create** at the bottom of the page
+#. Supply your email and phone number for validation
 
-   .. image:: /_static/image7.png
-      :height: 200px
+   .. image:: /_static/lab-instance-validation.png
+      :height: 400px
 
-.. NOTE::
-   In future steps, making a connection to WordPress or |bip| via SSH will
-   use the private key in PuTTY for authentication.
+#. Click **Purchase** or **Create**.  You will receive status "Deployment underway".
+   Continue on after receiving "Your deployment is complete".
+#. Go to **Resource groups** and click on your resource group
+#. Select your WordPress “Public IP address”
+
+   .. image:: /_static/image61.png
+      :height: 400px
+
+   .. image:: /_static/image62.png
+      :height: 400px
+
+#. Verify that \https://<WordPress-Public-IP> displays the
+   Wordpress blog
+
+   - You may have to accept the security warning
+
+   .. Note::
+      Remember the WordPress public IP address. This will be used in
+      subsequent steps.  This can take 10min before page loads.
 
 Task – Deploy a new F5 BIG-IP VE in Azure
 -----------------------------------------
 
-In this task you will deploy a new Azure Resource Group, F5 BIG-IP VE,
-and other supporting configuration items. Below is a list of items
-created during this step.
+In this task you will deploy a virtual machine and install the
+BIG-IP.
 
--  Resource Group
--  Virtual Machine for BIG-IP
--  Network Interface for BIG-IP
--  Public IP Address for BIG-IP
--  Network Security Group
--  Storage Account
--  Virtual Network
-
-Let's get started.
-
-#. Log into the portal – https://portal.azure.com using the student## account assigned.
-
-   .. image:: /_static/image008.png
-      :height: 50px
-
-#. Click the green **+** sign at the top left corner of the screen
+#. Click the green **+ Create a resource** sign at the top left corner of the screen
 #. Search the marketplace by typing 'F5 Better' in the search field and hit **Enter**.
    Take your time to view the different F5 products available.
 
-#. Click **F5 BIG-IP ADC BETTER – BYOL**
+#. Click **F5 BIG-IP Virtual Edition - BETTER (PAYG, 25Mbps)**
 
    .. image:: /_static/image9.png
-      :height: 50px
+      :height: 400px
 
    .. NOTE::
-      An appropriate license is delivered by your lab proctor. The proctor
-      will explain why you use **BYOL** in this lab.
-
-#. At the bottom of the next page, selected **Resource Manager** as the
-   deployment model
+      All hourly offerings include a 30 day free trial as well as access to F5 premium support.
 
 #. Click **Create**
 
@@ -101,132 +134,66 @@ Let's get started.
 
    Table 1.1
 
-   +-----------------------+----------------------------------------+
-   | Key                   | Value                                  |
-   +=======================+========================================+
-   | BIG-IP Image          | F5 BIG-IP ADC BETTER – BYOL            |
-   +-----------------------+----------------------------------------+
-   | Deployment Model      | Resource Manager                       |
-   +-----------------------+----------------------------------------+
-   | Name                  | f5bigipuser<student number>bigip1      |
-   +-----------------------+----------------------------------------+
-   | VM disk type          | SSD                                    |
-   +-----------------------+----------------------------------------+
-   | User name             | f5bigipuser<student number>            |
-   +-----------------------+----------------------------------------+
-   | Authentication Type   | SSH public key                         |
-   +-----------------------+----------------------------------------+
-   | SSH public key        | From Lab 1, Task 1                     |
-   +-----------------------+----------------------------------------+
-   | Subscription          | <User Unique>                          |
-   +-----------------------+----------------------------------------+
-   | Resource group        | Create new                             |
-   +-----------------------+----------------------------------------+
-   | Resource group name   | f5bigipuser<student number>usergroup   |
-   +-----------------------+----------------------------------------+
-   | Location              | <Closest Azure DC>                     |
-   +-----------------------+----------------------------------------+
+   +-----------------------+-------------------------------------------------+
+   | Key                   | Value                                           |
+   +=======================+=================================================+
+   | Resource Group        | Use existing: student##-rg                      |
+   +-----------------------+-------------------------------------------------+
+   | Virtual machine name  | student##-f5                                    |
+   +-----------------------+-------------------------------------------------+
+   | Region                | <Closest Azure DC>                              |
+   +-----------------------+-------------------------------------------------+
+   | Size                  | Change: Standard DS2_v2                         |
+   +-----------------------+-------------------------------------------------+
+   | Authentication type   | Password                                        |
+   +-----------------------+-------------------------------------------------+
+   | Username              | azureuser                                       |
+   +-----------------------+-------------------------------------------------+
+   | Password              | ChangeMeNow123                                  |
+   +-----------------------+-------------------------------------------------+
+   | Public inbound ports  | Allow selected ports                            |
+   +-----------------------+-------------------------------------------------+
+   | Selected inbound ports| HTTPS                                           |
+   +-----------------------+-------------------------------------------------+
 
    Example:
 
    .. image:: /_static/image11.png
-      :height: 300px
-
-#. Once done, click **OK**
-
-   You now need to select the Virtual Machine disk type and image size.
-   Using the information in Table 1.2 complete the “Size” page.
-
-   .. NOTE::
-      For a complete list of compatible Azure instance sizes, refer to
-      the “BIG-IP Virtual Edition and Microsoft Azure: Setup” guide.
-
-   Table 1.2
-
-   +-------------+-------------------+
-   | Key         | Value             |
-   +=============+===================+
-   | Disk Type   | HDD               |
-   +-------------+-------------------+
-   | Size        | D2\_V2 Standard   |
-   +-------------+-------------------+
-
-#. Search **D2** from “Choose a size”
-#. Select **D2\_V2 Standard**
+      :height: 400px
 
    .. image:: /_static/image13.png
-      :height: 300px
+      :height: 150px
 
-#. Click **Select**
-
-   In the “Settings” page, provide the remaining information required for
-   the BIG-IP deployment and associated resources. Using the information in
-   Table 1.3 to complete the “Settings” page.
-
-   Table 1.3
-
-   +---------------------+---------+
-   | Key                 | Value   |
-   +=====================+=========+
-   | Storage Type        | HDD     |
-   +---------------------+---------+
-   | Use managed disks   | No      |
-   +---------------------+---------+
-   | Public Inbound ports| HTTPS   |
-   |                     | SSH     |
-   +---------------------+---------+
-#. Under Settings, change "Disk type" to **HDD** and "Use managed disk" to **No**
-
-   Look around at the various configurable items but leave them unchanged.
-
-   .. image:: /_static/image14.png
-      :height: 300px
-
-#. Once done, click **OK**
+#. Click **Review + Create**
 #. Review the "Summary" page and the purchase you are about to make
-
-   .. Note:: In the screenshot below:
-
-      -  Notice “Validation passed”
-      -  Notice the F5 license BYOL is *not* charged
-      -  Notice the VM where the BIG-IP VE will reside is charged
-
-   .. image:: /_static/image15-top.png
-      :height: 300px
-
 #. Supply your email and phone number for validation
 
-   .. image:: /_static/lab-instance-validation.png
-      :height: 200px
+   .. image:: /_static/image14.png
+      :height: 400px
 
-#. Click **Create**
+#. Click **Create**.  You will receive status "Deployment underway".
+   Continue on after receiving "Your deployment is complete".
 
-Task – Allow management and HTTP access to the BIG-IP
------------------------------------------------------
+Task – Allow management and HTTPS access to the BIG-IP
+------------------------------------------------------
 
 In this task you will permit management access and HTTPS access to the
 BIG-IP by modifying the Network Security Group “Inbound” network access
 rule set.
 
-#. Go to **Resource groups**
-
-   .. image:: /_static/image16.png
-      :height: 200px
-
-#. Expand your Resource group and select the Network security group
+#. Select the **student##-f5-nsg** Network security group
 
    .. image:: /_static/image17.png
       :height: 300px
 
-#. Review the existing ruleset. Notice that you only have an inbound
-   rule allowing HTTPS and SSH.
+#. Review the existing ruleset. Notice the default inbound rules and HTTPS
+   selected during an earlier step.
 
    .. image:: /_static/image18.png
       :height: 300px
 
-   Now you will add rules to allow HTTPS for F5 BIG-IP management and
-   data plane by clicking on “Inbound security rules”
-   (to the left of the screen below).
+   Now you will add rules to allow HTTPS on port 8443 for F5 BIG-IP management
+   by clicking on “Inbound security rules” (to the left of the screen below).
 
 #. Click **Inbound security rules**
 
@@ -234,9 +201,6 @@ rule set.
       :height: 200px
 
 #. Click **+ Add**
-
-   .. image:: /_static/image20.png
-      :height: 200px
 
    Using the information provided in Table 1.4, add a rule to allow F5
    BIG-IP management traffic.
@@ -260,336 +224,29 @@ rule set.
    +--------------------+-------------------+
    | Priority           | 100               |
    +--------------------+-------------------+
-   | Name               | f5-allow-mgmt     |
+   | Name               | f5_mgmt_8443      |
    +--------------------+-------------------+
 
    .. image:: /_static/image21.png
       :height: 400px
 
-#. Click **OK**
-
+#. Click **Add**
 #. When complete, verify the end results look as follows:
 
    .. image:: /_static/image22.png
+      :height: 200px
+
+#. Select **Resource Group > student##-rg > student##-f5** then **networking**
+   to view public and private address of the F5 BIG-IP virtual machine.
+
+   .. image:: /_static/image20.png
       :height: 300px
 
-Task – License and Apply Base BIG-IP Configuration
---------------------------------------------------
-
-In this task you will connect to the BIG-IP CLI and GUI, license the
-device, and complete a base configuration. First, you need to identify
-the BIG-IP's public IP address to which you will connect.
-
-#. Return to the **Resource group**
-#. Select **Network Interface** to see the F5 BIG-IP's private
-   and public IP addresses
-
-   .. image:: /_static/image23.png
-      :height: 200px
-
-   .. Note::
-      Remember the F5 BIG-IP's public IP address. This will be used in
-      subsequent steps.
-
-   .. image:: /_static/image24.png
-      :height: 200px
-
-#. Wait until the deployment is completed. To view status, click on the
-   bell symbol in the upper right corner of the screen. You will see
-   “Deployments succeeded” under “Notifications”.
-
-   .. image:: /_static/image25.png
-      :height: 200px
-
-   You now need to connect to the F5 BIG-IP CLI in order to license the F5
-   BIG-IP, configure the hostname, create an admin account, and set the
-   password.
-
-#. SSH to the F5 public IP address
-
-   **Connectivity for Linux / Mac Users:**
-
-   - Open the CLI
-   - Connect using ``ssh -i <private_key> f5bigipuser<Student Number>@<F5
-     BIG-IP public IP>``
-
-   .. Note::
-      The reference to **private_key** is the file corresponding to the
-      public key created during BIG-IP deployment by Azure. The f5bigipuserx
-      is the user you created during the same step (“Create virtual machine/Basics”).
-
-   Example:
-
-   .. image:: /_static/image26.png
-      :height: 100px
-
-   **Connectivity for Windows Users:**
-
-   - Open PuTTY
-   - Enter the public IP
-   - Go to **Connection -> SSH -> Auth**
-   - Browse to the location of your private key
-   - Select **Open** to start the connection
-
-   .. image:: /_static/image8.png
-      :height: 300px
-
-#. Type ``bash`` then enter.
-
-#. License your F5 BIG-IP by typing ``SOAPLicenseClient --basekey <license>``
-
-   Example:
-
-   .. image:: /_static/image27.png
-      :height: 60px
-
-   .. Note::
-      License key is provided by your instructor.
-
-#. Change the hostname and replace x with the number assigned by
-   your proctor
-
-   .. admonition:: TMSH
-
-      tmsh modify sys global-settings hostname f5bigipuserx.azure.local
-
-   Example:
-
-   .. image:: /_static/image28.png
-      :scale: 50 %
-
-#. Change the password for f5bigipuserx and replace x with the
-   number assigned by your proctor
-
-   .. admonition:: TMSH
-
-      tmsh modify auth user f5bigipuserx password Demo123!
-
-   Example:
-
-   .. image:: /_static/image29.png
-      :scale: 50 %
-
-#. Wait until the system prompt changes to the following:
-
-   .. code-block:: bash
-
-      [f5bigipuserx@f5bigipuserx:Active:Standalone] ~ #
-
-   .. WARNING::
-      Changes made in the CLI are not present in the running configuration
-      until they are saved.
-
-#. Save the system configuration
-
-   .. admonition:: TMSH
-
-      tmsh save sys config
-
-   Example:
-
-   .. image:: /_static/image30.png
-      :scale: 50 %
-
-#. Open your favorite web browser
-#. Connect to the F5 GUI by going to \https://<F5-BIG-IP-public-IP>:8443
+#. Connect to the F5 GUI by going to **https://<F5-BIG-IP-public-IP>:8443**
 #. Accept the SSL certificate warning
 #. Log into the BIG-IP using the credentials configured in the previous steps
-
-   .. image:: /_static/image31.png
-      :scale: 50 %
-
-#. Click **Log in**
-
-Task – Deploy and configure WordPress within Azure
---------------------------------------------------
-
-In this task you will deploy another virtual machine and install the
-WordPress application to be placed behind the BIG-IP. Let's go back to
-the Microsoft Azure Portal.
-
-#. Click the green **+** sign at the top left corner of the screen
-#. Start searching the marketplace by typing 'bitnami wordpress' in the
-   search field and hit **Enter**
-
-   .. image:: /_static/image32.png
-      :height: 150px
-
-#. Select **WordPress Certified by Bitnami**
-
-   .. image:: /_static/image33.png
-      :height: 250px
-
-#. Click on **Create** at the bottom of the screen
-
-   Use the information in Table 1.6 to complete the “Basics” configuration
-   page during this deployment.
-
-   Table 1.6
-
-   +-----------------------+---------------------------------------------+
-   | Key                   | Value                                       |
-   +=======================+=============================================+
-   | Name                  | f5bigipuser<student number>wordpress        |
-   +-----------------------+---------------------------------------------+
-   | VM disk type          | SSD                                         |
-   +-----------------------+---------------------------------------------+
-   | User name             | f5bigipuser<student number>                 |
-   +-----------------------+---------------------------------------------+
-   | Authentication type   | SSH public key                              |
-   +-----------------------+---------------------------------------------+
-   | SSH public key        | From Lab 1, Task 1                          |
-   +-----------------------+---------------------------------------------+
-   | Subscription          | <User Unique>                               |
-   +-----------------------+---------------------------------------------+
-   | Resource Group        | Use existing previously created in step 1   |
-   +-----------------------+---------------------------------------------+
-   | Location              | <Closest Azure DC>                          |
-   +-----------------------+---------------------------------------------+
-
-   .. image:: /_static/image34.png
-      :height: 450px
-
-#. Click **OK** at the bottom of the page
-
-   Use the information in Table 1.7 to complete the “Choose a size” configuration
-   page during this deployment.
-
-   Table 1.7
-
-   +-------------+------------+
-   | Key         | Value      |
-   +=============+============+
-   | Disk Type   | All        |
-   +-------------+------------+
-   | Size        | A1 Basic   |
-   +-------------+------------+
-
-#. Choose **A1 Basic**
-
-   .. image:: /_static/image35.png
-      :height: 200px
-
-#. Click **Select**
-
-   Use the information in Table 1.8 to complete the “Settings” configuration
-   page during this deployment.
-
-   .. NOTE::
-      On the Settings page you’ll see a warning concerning the VM size
-      chosen.
-
-   Table 1.8
-
-   +---------------------+---------+
-   | Key                 | Value   |
-   +=====================+=========+
-   | Storage Type        | HDD     |
-   +---------------------+---------+
-   | Use managed disks   | No      |
-   +---------------------+---------+
-
-#. Change the "Disk type" to **HDD**
-#. Set “Use managed disk” to **No**
-#. Keep the other configurations unmodified
-
-   .. image:: /_static/image36.png
-      :height: 400px
-
-#. Click **OK**
-#. Verify the summary
-
-   .. image:: /_static/image37-top.png
-      :height: 250px
-
-#. Supply your email and phone number for validation
-
-   .. image:: /_static/lab-instance-validation.png
-      :height: 250px
-
-#. Click **Purchase** or **Create**
-#. Go to **Resource groups** and click on your resource group
-#. Select your WordPress “Public IP address”
-
-   .. image:: /_static/image38.png
-      :height: 250px
-
-   .. image:: /_static/image39.png
-      :height: 200px
-
-   .. Note::
-      Remember the WordPress public IP address. This will be used in
-      subsequent steps.
-
-   Go ahead and test access to the WordPress public IP with SSH and HTTPS.
-
-#. SSH to the WordPress public IP address
-
-   **For Linux / Mac Users:**
-
-   - Open the CLI
-   - Connect using ``ssh -i <private_key> f5bigipuser<Student Number>@<WordPress VM public IP>``
-
-   .. Note::
-      The reference to **private_key** is the file corresponding to the
-      public key created during Wordpress deployment by Azure.
-
-   Example:
-
-   .. image:: /_static/image40.png
-      :scale: 50 %
-
-   **For Windows Users:**
-
-   - Open PuTTY
-   - Enter the public IP
-   - Go to **Connection -> SSH -> Auth**
-   - Browse to the location of your private key
-   - Select **Open** to start the connection
-
-   .. image:: /_static/image8.png
-      :scale: 50 %
-
-#. Verify that \https://<WordPress-Public-IP> displays the
-   Wordpress blog
-
-   - You may have to accept the security warning
-
-   .. image:: /_static/image42.png
-      :scale: 50 %
-
-   You now need to modify the Network security group to remove direct
-   inbound access to the WordPress application. Let's go back to the
-   Microsoft Azure portal.
-
-#. Go to **Resource groups** and click on your resource group
-#. Select your WordPress Network security group
-
-   .. image:: /_static/image43.png
-      :scale: 50 %
-
-#. Remove the HTTP and HTTPS inbound rules while leaving only SSH access
-
-   .. Note::
-      You will only allow web access to the WordPress blog via the F5 BIG-IP.
-
-   .. image:: /_static/image44.png
-      :scale: 50 %
-
-#. Click on the **…** link at the far right side of the rule to be deleted
-
-   .. image:: /_static/image45.png
-      :scale: 50 %
-
-#. Click **Delete**
-#. Confirm the delete action when prompted by clicking **Yes**
-#. Now it's time to confirm web access has been restricted to WordPress.
-   Open a private browser window (not a normal window...choose **private**)
-#. Verify that \https://<WordPress-Public-IP> and \http://<WordPress-Public-IP>
-   do *NOT* display the WordPress blog
-
-   .. image:: /_static/image46.png
-      :scale: 50 %
+   Username: azureuser
+   Password: ChangeMeNow123
 
 Task – Allow Internet access to WordPress through the BIG-IP
 ------------------------------------------------------------
@@ -599,7 +256,8 @@ Pool to allow inbound Internet access to the WordPress application. First we
 need to identify the private IP address for the WordPress instance. Let's go
 back to the Microsoft Azure Portal.
 
-#. Select your WordPress Network Interface
+#. Select **Resource Group > student##-rg > student##-wp** then **networking**
+   to view public and private address of the F5 BIG-IP virtual machine.
 
    .. image:: /_static/image47.png
       :scale: 50 %
@@ -607,12 +265,6 @@ back to the Microsoft Azure Portal.
    .. Note::
       Remember WordPress private IP address. This will be used in
       subsequent steps.
-
-   .. image:: /_static/image48.png
-      :scale: 50 %
-
-   This completes work in the Microsoft Azure Portal. You will now
-   configure the F5 BIG-IP.
 
 #. Connect to the BIG-IP using \https://<F5-public-IP>:8443
 #. From the BIG-IP GUI, go to **Local traffic -> Pools -> Pool List** and
@@ -706,24 +358,36 @@ back to the Microsoft Azure Portal.
    .. image:: /_static/image55.png
       :scale: 50 %
 
+Task – Disable direct Internet access to WordPress
+--------------------------------------------------
 
-Task – Lab 1 Teardown
----------------------
-Please revoke BIG-IP license for reuse in next lab then delete lab resource group.
+You now need to modify the Network security group to remove direct
+inbound access to the WordPress application.
 
-#. Revoke BIG-IP license for resuse in next lab.
+#. Select **Resource Group > student##-rg > student##-wp-nsg** then **inbound security rules**
 
-   - From BIG-IP GUI select **System -> License** then select **revoke**.
-
-#. Delete resource group **f5bigipuser<student number>usergroup** created earlier in this lab.
-
-   - From Azure Portal select **Resource Group**
-   - Select **...** on right side of the resource group created earlier
-   - Select **delete**.  You will be prompted to enter resource again for confirmation.
-
-#. Enter resource group name when prompted for resource group to be deleted.
-
-   .. image:: /_static/image56.gif
+   .. image:: /_static/image43.png
       :scale: 50 %
 
-**This concludes Lab 1**
+#. Remove the HTTP and HTTPS inbound rules while leaving only SSH access
+
+   .. Note::
+      You will only allow web access to the WordPress blog via the F5 BIG-IP.
+
+   .. image:: /_static/image44.png
+      :scale: 50 %
+
+#. Click on the **…** link at the far right side of the rule to be deleted
+
+   .. image:: /_static/image45.png
+      :scale: 50 %
+
+#. Click **Delete**
+#. Confirm the delete action when prompted by clicking **Yes**
+#. Now it's time to confirm web access has been restricted to WordPress.
+   Open a private browser window (not a normal window...choose **private**)
+#. Verify that \https://<WordPress-Public-IP> and \http://<WordPress-Public-IP>
+   do *NOT* display the WordPress blog
+
+   .. image:: /_static/image46.png
+      :scale: 50 %
