@@ -227,7 +227,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../intro.html">1. Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. Class - F5 Lab Days - Azure</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="module3.html">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></li>
 </ul>
 </li>
@@ -255,7 +255,8 @@ going to the Azure Portal.</p>
 </li>
 <li><p class="first">Scroll down and notice the different licensing options</p>
 </li>
-<li><p class="first">Choose <strong>Deploying the BIG-IP in Azure - BYOL</strong> by right-clicking and opening in a new tab</p>
+<li><p class="first">Choose <strong>Deploying the BIG-IP VE in Azure - PAYG, New Networking Stack</strong>
+by right-clicking and opening in a new tab</p>
 <a class="reference internal image-reference" href="../../_images/lab3-image003.png"><img alt="../../_images/lab3-image003.png" src="../../_images/lab3-image003.png" style="height: 350px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -300,35 +301,27 @@ deployment process. Leave all other settings as default.</p>
 <td>Create new</td>
 </tr>
 <tr class="row-even"><td>Resource group name</td>
-<td>bigipuser&lt;student number&gt;-aa</td>
+<td>student98-rg1</td>
 </tr>
 <tr class="row-odd"><td>Location</td>
 <td>&lt;Closest Azure DC&gt;</td>
 </tr>
 <tr class="row-even"><td>Admin Password</td>
-<td>Demo123Demo123!</td>
+<td>ChangeMeNow123</td>
 </tr>
 <tr class="row-odd"><td>Dns Name for Public IP</td>
-<td>f5bigipuser&lt;student number&gt;aa</td>
-</tr>
-<tr class="row-even"><td>License Key 1</td>
-<td>&lt;Provided by proctor&gt;</td>
-</tr>
-<tr class="row-odd"><td>License Key 2</td>
-<td>&lt;Provided by proctor&gt;</td>
+<td>student98-arm</td>
 </tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../../_images/lab3-image004.png"><img alt="../../_images/lab3-image004.png" src="../../_images/lab3-image004.png" style="width: 364.5px; height: 417.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/lab3-image004.png"><img alt="../../_images/lab3-image004.png" src="../../_images/lab3-image004.png" style="width: 576.0px; height: 501.0px;" /></a>
 </li>
 <li><p class="first">Scroll down and check “I agree to the terms and conditions stated
 above”</p>
 </li>
 <li><p class="first">Click on <strong>Purchase</strong></p>
-<a class="reference internal image-reference" href="../../_images/lab3-image005.png"><img alt="../../_images/lab3-image005.png" src="../../_images/lab3-image005.png" style="width: 371.5px; height: 170.0px;" /></a>
 </li>
-<li><p class="first">Review “Notifications” in the top right and notice your new deployment.</p>
-<a class="reference internal image-reference" href="../../_images/lab3-image006.png"><img alt="../../_images/lab3-image006.png" src="../../_images/lab3-image006.png" style="width: 214.0px; height: 99.0px;" /></a>
+<li><p class="first">Review “Notifications” in the top right and wait for deployment complete.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You just setup two BIG-IPs as a cluster without having to know any
@@ -349,10 +342,8 @@ of F5 instances and Azure networking components. Now is a good time to
 review other pieces that were created by the ARM template. Let’s go back
 to the Azure Portal.</p>
 <ol class="arabic">
-<li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
-</li>
-<li><p class="first">Look for the resource type load balancer and select it</p>
-<a class="reference internal image-reference" href="../../_images/image96.png"><img alt="../../_images/image96.png" src="../../_images/image96.png" style="width: 717.5px; height: 306.0px;" /></a>
+<li><p class="first">Select <strong>Resource groups &gt; student##-rg1 &gt; student##-arm-ext-alb</strong></p>
+<a class="reference internal image-reference" href="../../_images/image96.png"><img alt="../../_images/image96.png" src="../../_images/image96.png" style="width: 1089.0px; height: 553.0px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This load balancer is an Azure Load Balancer (ALB) which will be in
@@ -361,8 +352,8 @@ front of the two BIG-IPs and used to support the setup of the cluster.</p>
 <p>The ALB has some important NAT rules to explore. These will direct
 management traffic to the appropriate F5. Review the NAT rules first.</p>
 </li>
-<li><p class="first">From the Resource Group, click <strong>Inbound NAT rules</strong></p>
-<a class="reference internal image-reference" href="../../_images/image97.png"><img alt="../../_images/image97.png" src="../../_images/image97.png" style="width: 682.0px; height: 279.0px;" /></a>
+<li><p class="first">Click <strong>Inbound NAT rules</strong></p>
+<a class="reference internal image-reference" href="../../_images/image97.png"><img alt="../../_images/image97.png" src="../../_images/image97.png" style="width: 1087.0px; height: 375.0px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Remember the different service ports. These will be used in subsequent steps
@@ -373,7 +364,7 @@ to connect to the F5 for management purposes.</p>
 </li>
 <li><p class="first">Expand <strong>loadBalancerBackEnd</strong> to view the IP addresses of the
 F5 BIG-IPs sitting behind the Azure ALB</p>
-<a class="reference internal image-reference" href="../../_images/image98.png"><img alt="../../_images/image98.png" src="../../_images/image98.png" style="width: 718.0px; height: 269.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image98.png"><img alt="../../_images/image98.png" src="../../_images/image98.png" style="width: 970.0px; height: 320.0px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Take note of these IP addresses. These are the applications running
@@ -387,7 +378,7 @@ that health probes are created.</p>
 <li><p class="first">From the Resource Group, click <strong>Health probes</strong></p>
 </li>
 <li><p class="first">Then click the <strong>+ Add</strong> button</p>
-<img alt="../../_images/lab03-arm01.png" src="../../_images/lab03-arm01.png" />
+<a class="reference internal image-reference" href="../../_images/lab03-arm01.png"><img alt="../../_images/lab03-arm01.png" src="../../_images/lab03-arm01.png" style="width: 342.0px; height: 334.0px;" /></a>
 <p>Use the information provided in Table 3.2 to complete the “Add health probe”
 page. Leave all other settings as default.</p>
 <p>Table 3.2</p>
@@ -413,17 +404,16 @@ page. Leave all other settings as default.</p>
 </tr>
 </tbody>
 </table>
-<img alt="../../_images/lab03-arm02.png" src="../../_images/lab03-arm02.png" />
+<a class="reference internal image-reference" href="../../_images/lab03-arm02.png"><img alt="../../_images/lab03-arm02.png" src="../../_images/lab03-arm02.png" style="width: 463.0px; height: 560.0px;" /></a>
 </li>
 <li><p class="first">Scroll down and select <strong>OK</strong> and the results will show one new health probe</p>
-<img alt="../../_images/lab03-arm03.png" src="../../_images/lab03-arm03.png" />
 <p>The health probe is created and now you’ll need to create the
 Azure load balancing rules.</p>
 </li>
 <li><p class="first">From the Resource Group, click <strong>Load balancing rules</strong></p>
 </li>
 <li><p class="first">Then click the <strong>+ Add</strong> button</p>
-<img alt="../../_images/lab03-arm04.png" src="../../_images/lab03-arm04.png" />
+<a class="reference internal image-reference" href="../../_images/lab03-arm04.png"><img alt="../../_images/lab03-arm04.png" src="../../_images/lab03-arm04.png" style="width: 362.0px; height: 364.0px;" /></a>
 <p>Use the information provided in Table 3.3 to complete the “Add load balancing rule”
 page. Leave all other settings as default.</p>
 <p>Table 3.3</p>
@@ -446,7 +436,7 @@ page. Leave all other settings as default.</p>
 </tr>
 </tbody>
 </table>
-<img alt="../../_images/lab03-arm05.png" src="../../_images/lab03-arm05.png" />
+<a class="reference internal image-reference" href="../../_images/lab03-arm05.png"><img alt="../../_images/lab03-arm05.png" src="../../_images/lab03-arm05.png" style="width: 455.0px; height: 560.0px;" /></a>
 </li>
 <li><p class="first">Scroll down and select <strong>OK</strong> and the results will show one new load balancing rule</p>
 <img alt="../../_images/lab03-arm06.png" src="../../_images/lab03-arm06.png" />
@@ -512,28 +502,28 @@ page during this deployment.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Name</td>
-<td>user&lt;student number&gt;wordpress</td>
+<td>student##-wordpress</td>
 </tr>
 <tr class="row-odd"><td>VM disk type</td>
 <td>SSD</td>
 </tr>
 <tr class="row-even"><td>User name</td>
-<td>azureuser&lt;student number&gt;</td>
+<td>azureuser</td>
 </tr>
 <tr class="row-odd"><td>Authentication type</td>
-<td>SSH public key</td>
+<td>Password</td>
 </tr>
-<tr class="row-even"><td>SSH public key</td>
-<td>From Lab 1, Task 1</td>
+<tr class="row-even"><td>Password</td>
+<td>ChangeMeNow123</td>
 </tr>
 <tr class="row-odd"><td>Subscription</td>
 <td>&lt;User Unique&gt;</td>
 </tr>
 <tr class="row-even"><td>Resource Group</td>
-<td>Existing: bigipuser&lt;student number&gt;-aa</td>
+<td>Existing: student##-rg1</td>
 </tr>
 <tr class="row-odd"><td>Resource Group</td>
-<td>bigipuser&lt;student number&gt;-aa</td>
+<td>student##-arm</td>
 </tr>
 <tr class="row-even"><td>Location</td>
 <td>&lt;Closest Azure DC&gt;</td>

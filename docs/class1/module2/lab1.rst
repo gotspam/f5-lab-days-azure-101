@@ -1,11 +1,11 @@
-Task – ccAccess WordPress instance and launch a SQL Injection attack
---------------------------------------------------------------------
+Task – Launch a SQL Injection attack against WordPress
+------------------------------------------------------
 
 The next task involves testing the application and checking for open
 vulnerabilities. You will need to access your WordPress instance and
 launch a simple SQL Injection attack.
 
-#. Open a web browser and navigate to \http://<wordpress-public-IP>
+#. Open a web browser and navigate to \http://<WordPress-Public-IP>
 #. Navigate to the **Search** box. You can do this via two methods:
 
    - Scrolling down the page with the browser scroll bars
@@ -35,6 +35,7 @@ launch a simple SQL Injection attack.
       operations on the database (e.g. shutdown the DBMS), recover the
       content of a given file present on the DBMS file system, and in
       some cases issue commands to the operating system.
+
 
 Task – Launch Azure Security Center and deploy the F5 WAF
 ---------------------------------------------------------
@@ -67,7 +68,7 @@ of your WordPress application.
 #. In the "Recommendations" page, select the **Add a web application firewall**
 #. Click on the name of the application to the right of the screen
 
-   Example: *user<student number>wordpress-ip* in the screenshot below
+   Example: *student##-wp* in the screenshot below
 
    .. image:: /_static/image68.png
       :scale: 50 %
@@ -116,15 +117,13 @@ of your WordPress application.
    +------------------------+-------------------------------------+
    | Key                    | Value                               |
    +========================+=====================================+
-   | Deployment Name        | F5waf<student number>               |
+   | Deployment Name        | student##-waf                       |
    +------------------------+-------------------------------------+
    | BIG-IP Version         | Choose latest 13x available         |
    +------------------------+-------------------------------------+
-   | F5 WAF Password        | Demo123Demo123!                     |
+   | F5 WAF Password        | ChangeMeNow123                      |
    +------------------------+-------------------------------------+
-   | Confirm Password       | Demo123Demo123!                     |
-   +------------------------+-------------------------------------+
-   | License token          | <license provided by the proctor>   |
+   | Confirm Password       | ChangeMeNow123                      |
    +------------------------+-------------------------------------+
 
    .. image:: /_static/lab02-waf03.png
@@ -140,7 +139,7 @@ of your WordPress application.
    +------------------------+---------------------------------------------+
    | Key                    | Value                                       |
    +========================+=============================================+
-   | Domain name label      | f5waf<student number>                       |
+   | Domain name label      | student##-waf                               |
    +------------------------+---------------------------------------------+
    | Subnets                | You'll need to hit **Configure Subnets**    |
    +------------------------+---------------------------------------------+
@@ -157,11 +156,11 @@ of your WordPress application.
    +------------------------+---------------------------------------------+
    | Key                    | Value                                       |
    +========================+=============================================+
-   | Management Subnet      | 10.0.<student number>.0/26                  |
+   | Management Subnet      | 10.0.0.0/26                                 |
    +------------------------+---------------------------------------------+
-   | External Subnet        | 10.0.<student number>.64/26                 |
+   | External Subnet        | 10.0.0.64/26                                |
    +------------------------+---------------------------------------------+
-   | Internal Subnet        | 10.0.<student number>.128/26                |
+   | Internal Subnet        | 10.0.0.128/26                               |
    +------------------------+---------------------------------------------+
 
 
@@ -218,7 +217,7 @@ provisioned as part of the Azure Security Center.
 #. Click on the Resource Group that deployed the F5 WAF
 
    .. Hint::
-      It will be named wordpress-asc…
+      It will be named student-asc…
 
 #. Click on **Public IP address** for the F5 device
 

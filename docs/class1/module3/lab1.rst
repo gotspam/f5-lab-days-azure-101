@@ -8,7 +8,8 @@ going to the Azure Portal.
 #. Open a new browser and go to
    https://github.com/F5Networks/f5-azure-arm-templates
 #. Scroll down and notice the different licensing options
-#. Choose **Deploying the BIG-IP in Azure - BYOL** by right-clicking and opening in a new tab
+#. Choose **Deploying the BIG-IP VE in Azure - PAYG, New Networking Stack**
+   by right-clicking and opening in a new tab
 
    .. image:: /_static/lab3-image003.png
       :height: 350px
@@ -46,17 +47,13 @@ going to the Azure Portal.
    +--------------------------+---------------------------------+
    | Resource group           | Create new                      |
    +--------------------------+---------------------------------+
-   | Resource group name      | bigipuser<student number>-aa    |
+   | Resource group name      | student98-rg1                   |
    +--------------------------+---------------------------------+
    | Location                 | <Closest Azure DC>              |
    +--------------------------+---------------------------------+
-   | Admin Password           | Demo123Demo123!                 |
+   | Admin Password           | ChangeMeNow123                  |
    +--------------------------+---------------------------------+
-   | Dns Name for Public IP   | f5bigipuser<student number>aa   |
-   +--------------------------+---------------------------------+
-   | License Key 1            | <Provided by proctor>           |
-   +--------------------------+---------------------------------+
-   | License Key 2            | <Provided by proctor>           |
+   | Dns Name for Public IP   | student98-arm                   |
    +--------------------------+---------------------------------+
 
    .. image:: /_static/lab3-image004.png
@@ -66,13 +63,7 @@ going to the Azure Portal.
    above”
 #. Click on **Purchase**
 
-   .. image:: /_static/lab3-image005.png
-      :scale: 50 %
-
-#. Review "Notifications" in the top right and notice your new deployment.
-
-   .. image:: /_static/lab3-image006.png
-      :scale: 50 %
+#. Review "Notifications" in the top right and wait for deployment complete.
 
    .. Note::
       You just setup two BIG-IPs as a cluster without having to know any
@@ -91,8 +82,7 @@ of F5 instances and Azure networking components. Now is a good time to
 review other pieces that were created by the ARM template. Let's go back
 to the Azure Portal.
 
-#. Go to **Resource groups** and click on your resource group
-#. Look for the resource type load balancer and select it
+#. Select **Resource groups > student##-rg1 > student##-arm-ext-alb**
 
    .. image:: /_static/image96.png
       :scale: 50 %
@@ -104,7 +94,7 @@ to the Azure Portal.
    The ALB has some important NAT rules to explore. These will direct
    management traffic to the appropriate F5. Review the NAT rules first.
 
-#. From the Resource Group, click **Inbound NAT rules**
+#. Click **Inbound NAT rules**
 
    .. image:: /_static/image97.png
       :scale: 50 %
@@ -133,6 +123,7 @@ to the Azure Portal.
 #. Then click the **+ Add** button
 
    .. image:: /_static/lab03-arm01.png
+      :scale: 50 %
 
    Use the information provided in Table 3.2 to complete the "Add health probe"
    page. Leave all other settings as default.
@@ -150,10 +141,9 @@ to the Azure Portal.
    +--------------------------+---------------------------------+
 
    .. image:: /_static/lab03-arm02.png
+      :scale: 50 %
 
 #. Scroll down and select **OK** and the results will show one new health probe
-
-   .. image:: /_static/lab03-arm03.png
 
    The health probe is created and now you'll need to create the
    Azure load balancing rules.
@@ -162,6 +152,7 @@ to the Azure Portal.
 #. Then click the **+ Add** button
 
    .. image:: /_static/lab03-arm04.png
+      :scale: 50 %
 
    Use the information provided in Table 3.3 to complete the "Add load balancing rule"
    page. Leave all other settings as default.
@@ -177,6 +168,7 @@ to the Azure Portal.
    +--------------------------+---------------------------------+
 
    .. image:: /_static/lab03-arm05.png
+      :scale: 50 %
 
 #. Scroll down and select **OK** and the results will show one new load balancing rule
 
@@ -242,21 +234,21 @@ the Microsoft Azure Portal.
    +-----------------------+----------------------------------------+
    | Key                   | Value                                  |
    +=======================+========================================+
-   | Name                  | user<student number>wordpress          |
+   | Name                  | student##-wordpress                    |
    +-----------------------+----------------------------------------+
    | VM disk type          | SSD                                    |
    +-----------------------+----------------------------------------+
-   | User name             | azureuser<student number>              |
+   | User name             | azureuser                              |
    +-----------------------+----------------------------------------+
-   | Authentication type   | SSH public key                         |
+   | Authentication type   | Password                               |
    +-----------------------+----------------------------------------+
-   | SSH public key        | From Lab 1, Task 1                     |
+   | Password              | ChangeMeNow123                         |
    +-----------------------+----------------------------------------+
    | Subscription          | <User Unique>                          |
    +-----------------------+----------------------------------------+
-   | Resource Group        | Existing: bigipuser<student number>-aa |
+   | Resource Group        | Existing: student##-rg1                |
    +-----------------------+----------------------------------------+
-   | Resource Group        | bigipuser<student number>-aa           |
+   | Resource Group        | student##-arm                          |
    +-----------------------+----------------------------------------+
    | Location              | <Closest Azure DC>                     |
    +-----------------------+----------------------------------------+

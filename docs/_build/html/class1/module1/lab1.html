@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center" href="../module2/module2.html" />
+    <link rel="next" title="2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center" href="../module2/module2.html" />
     <link rel="prev" title="2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure" href="module1.html" />
 <!--
 # Copyright 2017 F5 Networks
@@ -218,6 +218,7 @@
 <li><a class="reference internal" href="#task-allow-management-and-https-access-to-the-big-ip">2.1.4. Task – Allow management and HTTPS access to the BIG-IP</a></li>
 <li><a class="reference internal" href="#task-allow-internet-access-to-wordpress-through-the-big-ip">2.1.5. Task – Allow Internet access to WordPress through the BIG-IP</a></li>
 <li><a class="reference internal" href="#task-disable-direct-internet-access-to-wordpress">2.1.6. Task – Disable direct Internet access to WordPress</a></li>
+<li><a class="reference internal" href="#task-lab-1-teardown">2.1.7. Task – Lab 1 Teardown</a></li>
 </ul>
 
 
@@ -226,7 +227,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../intro.html">1. Getting Started</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. Class - F5 Lab Days - Azure</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="module1.html">2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../module3/module3.html">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></li>
 </ul>
 </li>
@@ -237,7 +238,7 @@
                         title="previous chapter">2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../module2/module2.html"
-                        title="next chapter">2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></p>
+                        title="next chapter">2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -375,6 +376,7 @@ Wordpress blog</p>
 <ul class="simple">
 <li>You may have to accept the security warning</li>
 </ul>
+<a class="reference internal image-reference" href="../../_images/image54.png"><img alt="../../_images/image54.png" src="../../_images/image54.png" style="height: 400px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Remember the WordPress public IP address. This will be used in
@@ -655,7 +657,6 @@ displays your WordPress blog.</p>
 ignore this as in this lab you did not generate the server certificates.
 In real life, you would ensure you have installed valid certificates.</p>
 </div>
-<a class="reference internal image-reference" href="../../_images/image54.png"><img alt="../../_images/image54.png" src="../../_images/image54.png" style="width: 597.0px; height: 416.5px;" /></a>
 </li>
 <li><p class="first">Now check the statistics of your virtual server to verify traffic flow,
 by navigating to <strong>Statistics -&gt; Module Statistics -&gt; Local Traffic</strong></p>
@@ -673,28 +674,38 @@ inbound access to the WordPress application.</p>
 <li><p class="first">Select <strong>Resource Group &gt; student##-rg &gt; student##-wp-nsg</strong> then <strong>inbound security rules</strong></p>
 <a class="reference internal image-reference" href="../../_images/image43.png"><img alt="../../_images/image43.png" src="../../_images/image43.png" style="width: 1085.0px; height: 284.0px;" /></a>
 </li>
-<li><p class="first">Remove the HTTP and HTTPS inbound rules while leaving only SSH access</p>
+<li><p class="first">Click on the <strong>…</strong> link at the far right side of the HTTPS inbound
+rule and select <strong>Delete</strong></p>
+<a class="reference internal image-reference" href="../../_images/image45.png"><img alt="../../_images/image45.png" src="../../_images/image45.png" style="width: 903.0px; height: 132.0px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You will only allow web access to the WordPress blog via the F5 BIG-IP.</p>
 </div>
-<a class="reference internal image-reference" href="../../_images/image44.png"><img alt="../../_images/image44.png" src="../../_images/image44.png" style="width: 918.0px; height: 192.0px;" /></a>
-</li>
-<li><p class="first">Click on the <strong>…</strong> link at the far right side of the rule to be deleted</p>
-<a class="reference internal image-reference" href="../../_images/image45.png"><img alt="../../_images/image45.png" src="../../_images/image45.png" style="width: 903.0px; height: 132.0px;" /></a>
-</li>
-<li><p class="first">Click <strong>Delete</strong></p>
 </li>
 <li><p class="first">Confirm the delete action when prompted by clicking <strong>Yes</strong></p>
-</li>
-<li><p class="first">Now it’s time to confirm web access has been restricted to WordPress.
-Open a private browser window (not a normal window…choose <strong>private</strong>)</p>
 </li>
 <li><p class="first">Verify that https://&lt;WordPress-Public-IP&gt; and http://&lt;WordPress-Public-IP&gt;
 do <em>NOT</em> display the WordPress blog</p>
 <a class="reference internal image-reference" href="../../_images/image46.png"><img alt="../../_images/image46.png" src="../../_images/image46.png" style="width: 770.0px; height: 495.0px;" /></a>
 </li>
 </ol>
+</div>
+<div class="section" id="task-lab-1-teardown">
+<h1>2.1.7. Task – Lab 1 Teardown<a class="headerlink" href="#task-lab-1-teardown" title="Permalink to this headline">¶</a></h1>
+<p>Skip this Task if you intend to do the Azure Security Center Lab.</p>
+<ol class="arabic">
+<li><p class="first">Delete resource group <strong>student##-rg</strong> created earlier in this lab.</p>
+<ul class="simple">
+<li>From Azure Portal select <strong>Resource Group</strong></li>
+<li>Select <strong>…</strong> on right side of the resource group created earlier</li>
+<li>Select <strong>delete</strong>.  You will be prompted to enter resource again for confirmation.</li>
+</ul>
+</li>
+<li><p class="first">Enter resource group name when prompted for resource group to be deleted.</p>
+<a class="reference internal image-reference" href="../../_images/image56.gif"><img alt="../../_images/image56.gif" src="../../_images/image56.gif" style="width: 93.5px; height: 93.5px;" /></a>
+</li>
+</ol>
+<p><strong>This concludes Lab 1</strong></p>
 </div>
 
 
@@ -705,7 +716,7 @@ do <em>NOT</em> display the WordPress blog</p>
 		        <a href="module1.html" title="2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
-              <a href="../module2/module2.html" title="2.2. Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+              <a href="../module2/module2.html" title="2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center" accesskey="n" class="btn btn-primary pull-right">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
            
 		     </div>
          </div>

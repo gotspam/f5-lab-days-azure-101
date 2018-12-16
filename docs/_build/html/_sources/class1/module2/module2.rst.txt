@@ -1,4 +1,4 @@
-Module 2 – Deploy an F5 Web Application Firewall Using the Azure Security Center
+Module – Deploy an F5 Web Application Firewall Using the Azure Security Center
 ===================================================================================
 
 F5 offers on-demand Layer 7 Web Application Firewall (WAF)

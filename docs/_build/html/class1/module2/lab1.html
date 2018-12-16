@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2.2.1. Task – ccAccess WordPress instance and launch a SQL Injection attack &#8212; F5 Lab Days - Azure  documentation</title>
+    <title>2.2.1. Task – Launch a SQL Injection attack against WordPress &#8212; F5 Lab Days - Azure  documentation</title>
     
     <link rel="stylesheet" href="../../_static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -212,7 +212,7 @@
    <span class="caption-text">Current Page</span>
   </p>
   <ul>
-<li><a class="reference internal" href="#">2.2.1. Task – ccAccess WordPress instance and launch a SQL Injection attack</a></li>
+<li><a class="reference internal" href="#">2.2.1. Task – Launch a SQL Injection attack against WordPress</a></li>
 <li><a class="reference internal" href="#task-launch-azure-security-center-and-deploy-the-f5-waf">2.2.2. Task – Launch Azure Security Center and deploy the F5 WAF</a></li>
 <li><a class="reference internal" href="#task-review-f5-waf-configurations-and-policies">2.2.3. Task – Review F5 WAF Configurations and Policies</a></li>
 <li><a class="reference internal" href="#task-demonstrate-f5-waf-blocking-functionality">2.2.4. Task – Demonstrate F5 WAF blocking functionality</a></li>
@@ -246,13 +246,13 @@
           <span class="right"><a href="../../genindex.html">Index</a></span>
         </h4>
         
-  <div class="section" id="task-ccaccess-wordpress-instance-and-launch-a-sql-injection-attack">
-<h1>2.2.1. Task – ccAccess WordPress instance and launch a SQL Injection attack<a class="headerlink" href="#task-ccaccess-wordpress-instance-and-launch-a-sql-injection-attack" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="task-launch-a-sql-injection-attack-against-wordpress">
+<h1>2.2.1. Task – Launch a SQL Injection attack against WordPress<a class="headerlink" href="#task-launch-a-sql-injection-attack-against-wordpress" title="Permalink to this headline">¶</a></h1>
 <p>The next task involves testing the application and checking for open
 vulnerabilities. You will need to access your WordPress instance and
 launch a simple SQL Injection attack.</p>
 <ol class="arabic">
-<li><p class="first">Open a web browser and navigate to http://&lt;wordpress-public-IP&gt;</p>
+<li><p class="first">Open a web browser and navigate to http://&lt;WordPress-Public-IP&gt;</p>
 </li>
 <li><p class="first">Navigate to the <strong>Search</strong> box. You can do this via two methods:</p>
 <ul class="simple">
@@ -312,7 +312,7 @@ applications more secure. One of the recommendations is to
 <li><p class="first">In the “Recommendations” page, select the <strong>Add a web application firewall</strong></p>
 </li>
 <li><p class="first">Click on the name of the application to the right of the screen</p>
-<p>Example: <em>user&lt;student number&gt;wordpress-ip</em> in the screenshot below</p>
+<p>Example: <em>student##-wp</em> in the screenshot below</p>
 <a class="reference internal image-reference" href="../../_images/image68.png"><img alt="../../_images/image68.png" src="../../_images/image68.png" style="width: 717.0px; height: 118.5px;" /></a>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -370,19 +370,16 @@ during this deployment. Leave all other options as default.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Deployment Name</td>
-<td>F5waf&lt;student number&gt;</td>
+<td>student##-waf</td>
 </tr>
 <tr class="row-odd"><td>BIG-IP Version</td>
 <td>Choose latest 13x available</td>
 </tr>
 <tr class="row-even"><td>F5 WAF Password</td>
-<td>Demo123Demo123!</td>
+<td>ChangeMeNow123</td>
 </tr>
 <tr class="row-odd"><td>Confirm Password</td>
-<td>Demo123Demo123!</td>
-</tr>
-<tr class="row-even"><td>License token</td>
-<td>&lt;license provided by the proctor&gt;</td>
+<td>ChangeMeNow123</td>
 </tr>
 </tbody>
 </table>
@@ -404,7 +401,7 @@ during this deployment. Leave all other options as default.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Domain name label</td>
-<td>f5waf&lt;student number&gt;</td>
+<td>student##-waf</td>
 </tr>
 <tr class="row-odd"><td>Subnets</td>
 <td>You’ll need to hit <strong>Configure Subnets</strong></td>
@@ -429,13 +426,13 @@ during this deployment. Leave all other options as default.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Management Subnet</td>
-<td>10.0.&lt;student number&gt;.0/26</td>
+<td>10.0.0.0/26</td>
 </tr>
 <tr class="row-odd"><td>External Subnet</td>
-<td>10.0.&lt;student number&gt;.64/26</td>
+<td>10.0.0.64/26</td>
 </tr>
 <tr class="row-even"><td>Internal Subnet</td>
-<td>10.0.&lt;student number&gt;.128/26</td>
+<td>10.0.0.128/26</td>
 </tr>
 </tbody>
 </table>
@@ -501,7 +498,7 @@ provisioned as part of the Azure Security Center.</p>
 <li><p class="first">Click on the Resource Group that deployed the F5 WAF</p>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
-<p class="last">It will be named wordpress-asc…</p>
+<p class="last">It will be named student-asc…</p>
 </div>
 </li>
 <li><p class="first">Click on <strong>Public IP address</strong> for the F5 device</p>

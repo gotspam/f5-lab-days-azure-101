@@ -105,6 +105,9 @@ WordPress application.
 
    - You may have to accept the security warning
 
+   .. image:: /_static/image54.png
+      :height: 400px
+
    .. Note::
       Remember the WordPress public IP address. This will be used in
       subsequent steps.  This can take 10min before page loads.
@@ -348,9 +351,6 @@ back to the Microsoft Azure Portal.
       ignore this as in this lab you did not generate the server certificates.
       In real life, you would ensure you have installed valid certificates.
 
-   .. image:: /_static/image54.png
-      :scale: 50 %
-
 #. Now check the statistics of your virtual server to verify traffic flow,
    by navigating to **Statistics -> Module Statistics -> Local Traffic**
 #. Under **Statistics Type**, select **Virtual Servers**
@@ -369,25 +369,35 @@ inbound access to the WordPress application.
    .. image:: /_static/image43.png
       :scale: 50 %
 
-#. Remove the HTTP and HTTPS inbound rules while leaving only SSH access
-
-   .. Note::
-      You will only allow web access to the WordPress blog via the F5 BIG-IP.
-
-   .. image:: /_static/image44.png
-      :scale: 50 %
-
-#. Click on the **…** link at the far right side of the rule to be deleted
+#. Click on the **…** link at the far right side of the HTTPS inbound
+   rule and select **Delete**
 
    .. image:: /_static/image45.png
       :scale: 50 %
 
-#. Click **Delete**
+   .. Note::
+      You will only allow web access to the WordPress blog via the F5 BIG-IP.
+
 #. Confirm the delete action when prompted by clicking **Yes**
-#. Now it's time to confirm web access has been restricted to WordPress.
-   Open a private browser window (not a normal window...choose **private**)
 #. Verify that \https://<WordPress-Public-IP> and \http://<WordPress-Public-IP>
    do *NOT* display the WordPress blog
 
    .. image:: /_static/image46.png
       :scale: 50 %
+
+Task – Lab 1 Teardown
+---------------------
+Skip this Task if you intend to do the Azure Security Center Lab.
+
+#. Delete resource group **student##-rg** created earlier in this lab.
+
+   - From Azure Portal select **Resource Group**
+   - Select **...** on right side of the resource group created earlier
+   - Select **delete**.  You will be prompted to enter resource again for confirmation.
+
+#. Enter resource group name when prompted for resource group to be deleted.
+
+   .. image:: /_static/image56.gif
+      :scale: 50 %
+
+**This concludes Lab 1**
