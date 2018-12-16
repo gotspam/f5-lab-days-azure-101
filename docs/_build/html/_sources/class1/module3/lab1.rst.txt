@@ -429,9 +429,6 @@ to the Microsoft Azure Portal.
 #. Open a browser to to \http://<alb-public-IP> and ensure it
    displays your WordPress blog.
 
-   .. image:: /_static/image01-wordpress.png
-      :scale: 50 %
-
 #. Now check the statistics of your virtual server to verify traffic flow,
    by navigating to **Statistics -> Module Statistics -> Local Traffic**
 #. Under **Statistics Type**, select **Virtual Servers**

@@ -377,8 +377,7 @@ inbound access to the WordPress application.
       You will only allow web access to the WordPress blog via the F5 BIG-IP.
 
 #. Confirm the delete action when prompted by clicking **Yes**
-#. Verify that \https://<WordPress-Public-IP> and \http://<WordPress-Public-IP>
-   do *NOT* display the WordPress blog
+#. Verify that \https://<WordPress-Public-IP> does *NOT* display the WordPress blog
 
    .. image:: /_static/image46.png
       :scale: 50 %
