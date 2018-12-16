@@ -181,16 +181,14 @@ to the Azure Portal.
    identify the BIG-IPs’ public IP addresses.
 
 #. Go to **Resource groups** and click on your resource group
-#. From the Resource Group, click one of the F5 virtual machines to see its public IP
+#. From the Resource Group, click one of the F5 virtual machines and notice that both F5 BIG-IPs have
+   the same public IP address
 
    .. image:: /_static/image100.png
       :scale: 50 %
 
    .. image:: /_static/image101.png
       :scale: 50 %
-
-#. Then click the other F5 virtual machine and notice that both F5 BIG-IPs have
-   the same public IP address
 
    .. Hint::
       You can access each individual unit by using the service ports identified
@@ -231,88 +229,36 @@ the Microsoft Azure Portal.
 
    Table 3.4
 
-   +-----------------------+----------------------------------------+
-   | Key                   | Value                                  |
-   +=======================+========================================+
-   | Name                  | student##-wordpress                    |
-   +-----------------------+----------------------------------------+
-   | VM disk type          | SSD                                    |
-   +-----------------------+----------------------------------------+
-   | User name             | azureuser                              |
-   +-----------------------+----------------------------------------+
-   | Authentication type   | Password                               |
-   +-----------------------+----------------------------------------+
-   | Password              | ChangeMeNow123                         |
-   +-----------------------+----------------------------------------+
-   | Subscription          | <User Unique>                          |
-   +-----------------------+----------------------------------------+
-   | Resource Group        | Existing: student##-rg1                |
-   +-----------------------+----------------------------------------+
-   | Resource Group        | student##-arm                          |
-   +-----------------------+----------------------------------------+
-   | Location              | <Closest Azure DC>                     |
-   +-----------------------+----------------------------------------+
+   +-----------------------+-------------------------------------------------+
+   | Key                   | Value                                           |
+   +=======================+=================================================+
+   | Resource Group        | Use existing: student##-rg1                     |
+   +-----------------------+-------------------------------------------------+
+   | Virtual machine name  | student##-wordpress                             |
+   +-----------------------+-------------------------------------------------+
+   | Region                | <Closest Azure DC>                              |
+   +-----------------------+-------------------------------------------------+
+   | Size                  | Change: Basic A1                                |
+   +-----------------------+-------------------------------------------------+
+   | Authentication type   | Password                                        |
+   +-----------------------+-------------------------------------------------+
+   | Username              | azureuser                                       |
+   +-----------------------+-------------------------------------------------+
+   | Password              | ChangeMeNow123                                  |
+   +-----------------------+-------------------------------------------------+
 
    .. image:: /_static/image120.png
       :scale: 50 %
 
-#. Click **OK** at the bottom of the page
-
-   Use the information in Table 3.5 to complete the “Choose a size” configuration
-   page during this deployment.
-
-   Table 3.5
-
-   +-------------+------------+
-   | Key         | Value      |
-   +=============+============+
-   | Disk Type   | HDD        |
-   +-------------+------------+
-   | Size        | A1 Basic   |
-   +-------------+------------+
-
-#. Choose **A1 Basic**
-
-   .. image:: /_static/image35.png
-      :scale: 50 %
-
-#. Click **Select**
-
-   .. NOTE::
-      On the Settings page you’ll see a warning concerning the VM size
-      chosen.
-
-   Use the information in Table 3.6 to complete the “Settings”
-   configuration page during this deployment.
-
-   Table 3.6
-
-   +---------------------+---------+
-   | Key                 | Value   |
-   +=====================+=========+
-   | Storage Type        | HDD     |
-   +---------------------+---------+
-   | Use managed disks   | No      |
-   +---------------------+---------+
-
-#. Change the "Disk type" to **HDD**
-#. Set “Use managed disk” to **No**
-#. Keep the other configurations unmodified
-
-   .. image:: /_static/image121.png
-      :scale: 50 %
-
-#. Click **OK**
+#. Click **Review + create** at the bottom of the page
 #. Verify the summary
+#. Supply your email and phone number for validation
 
    .. image:: /_static/image37-top.png
       :scale: 50 %
 
-#. Supply your email and phone number for validation
-
-   .. image:: /_static/lab-instance-validation.png
-
-#. Click **Purchase** or **Create**
+#. Click **Create**.  You will receive status "Deployment underway".
+   Continue on after receiving "Your deployment is complete".
 #. Go to **Resource groups** and click on your resource group
 #. Select your WordPress “Public IP address”
 
@@ -483,9 +429,6 @@ to the Microsoft Azure Portal.
 #. Open a browser to to \http://<alb-public-IP> and ensure it
    displays your WordPress blog.
 
-   .. image:: /_static/image01-wordpress.png
-      :scale: 50 %
-
 #. Now check the statistics of your virtual server to verify traffic flow,
    by navigating to **Statistics -> Module Statistics -> Local Traffic**
 #. Under **Statistics Type**, select **Virtual Servers**
@@ -607,13 +550,7 @@ WordPress application remains available.
 Task – Lab 3 Teardown
 ---------------------
 
-Please revoke BIG-IP license for reuse in next lab then delete lab resource group.
-
-#. Revoke BIG-IP license for resuse in next lab.
-
-   - From BIG-IP GUI select **System -> License** then select **revoke**.
-
-#. Delete resource group **bigipuser<student number>-aa** and created earlier in this lab.
+#. Delete resource group **student##-rg1** and created earlier in this lab.
 
    - From Azure Portal select **Resource Group**
    - Select **...** on right side of the resource group created earlier

@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" href="module3.html" />
+    <link rel="prev" title="2.3. Module – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" href="module3.html" />
 <!--
 # Copyright 2017 F5 Networks
 #
@@ -228,14 +228,14 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../class1.html">2. Class - F5 Lab Days - Azure</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../module1/module1.html">2.1. Module – Deploy a Standalone F5 BIG-IP Application Delivery Controller in Azure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../module2/module2.html">2.2. Module – Deploy an F5 Web Application Firewall Using the Azure Security Center</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="module3.html">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="module3.html">2.3. Module – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="module3.html"
-                        title="previous chapter">2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></p>
+                        title="previous chapter">2.3. Module – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates</a></p>
         
       </div>
       <div class="col-md-offset-3 col-sm-offset-3 main">
@@ -449,12 +449,10 @@ identify the BIG-IPs’ public IP addresses.</p>
 </li>
 <li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
 </li>
-<li><p class="first">From the Resource Group, click one of the F5 virtual machines to see its public IP</p>
-<a class="reference internal image-reference" href="../../_images/image100.png"><img alt="../../_images/image100.png" src="../../_images/image100.png" style="width: 951.0px; height: 578.0px;" /></a>
-<a class="reference internal image-reference" href="../../_images/image101.png"><img alt="../../_images/image101.png" src="../../_images/image101.png" style="width: 489.5px; height: 179.5px;" /></a>
-</li>
-<li><p class="first">Then click the other F5 virtual machine and notice that both F5 BIG-IPs have
+<li><p class="first">From the Resource Group, click one of the F5 virtual machines and notice that both F5 BIG-IPs have
 the same public IP address</p>
+<a class="reference internal image-reference" href="../../_images/image100.png"><img alt="../../_images/image100.png" src="../../_images/image100.png" style="width: 860.0px; height: 255.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image101.png"><img alt="../../_images/image101.png" src="../../_images/image101.png" style="width: 858.0px; height: 255.0px;" /></a>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p class="last">You can access each individual unit by using the service ports identified
@@ -492,8 +490,8 @@ page during this deployment.</p>
 <p>Table 3.4</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="37%" />
-<col width="63%" />
+<col width="32%" />
+<col width="68%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Key</th>
@@ -501,109 +499,40 @@ page during this deployment.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>Name</td>
+<tr class="row-even"><td>Resource Group</td>
+<td>Use existing: student##-rg1</td>
+</tr>
+<tr class="row-odd"><td>Virtual machine name</td>
 <td>student##-wordpress</td>
 </tr>
-<tr class="row-odd"><td>VM disk type</td>
-<td>SSD</td>
+<tr class="row-even"><td>Region</td>
+<td>&lt;Closest Azure DC&gt;</td>
 </tr>
-<tr class="row-even"><td>User name</td>
-<td>azureuser</td>
+<tr class="row-odd"><td>Size</td>
+<td>Change: Basic A1</td>
 </tr>
-<tr class="row-odd"><td>Authentication type</td>
+<tr class="row-even"><td>Authentication type</td>
 <td>Password</td>
+</tr>
+<tr class="row-odd"><td>Username</td>
+<td>azureuser</td>
 </tr>
 <tr class="row-even"><td>Password</td>
 <td>ChangeMeNow123</td>
 </tr>
-<tr class="row-odd"><td>Subscription</td>
-<td>&lt;User Unique&gt;</td>
-</tr>
-<tr class="row-even"><td>Resource Group</td>
-<td>Existing: student##-rg1</td>
-</tr>
-<tr class="row-odd"><td>Resource Group</td>
-<td>student##-arm</td>
-</tr>
-<tr class="row-even"><td>Location</td>
-<td>&lt;Closest Azure DC&gt;</td>
-</tr>
 </tbody>
 </table>
-<a class="reference internal image-reference" href="../../_images/image120.png"><img alt="../../_images/image120.png" src="../../_images/image120.png" style="width: 676.0px; height: 707.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/image120.png"><img alt="../../_images/image120.png" src="../../_images/image120.png" style="width: 604.0px; height: 548.0px;" /></a>
 </li>
-<li><p class="first">Click <strong>OK</strong> at the bottom of the page</p>
-<p>Use the information in Table 3.5 to complete the “Choose a size” configuration
-page during this deployment.</p>
-<p>Table 3.5</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="52%" />
-<col width="48%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Disk Type</td>
-<td>HDD</td>
-</tr>
-<tr class="row-odd"><td>Size</td>
-<td>A1 Basic</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p class="first">Choose <strong>A1 Basic</strong></p>
-<a class="reference internal image-reference" href="../../_images/image35.png"><img alt="../../_images/image35.png" src="../../_images/image35.png" style="width: 1098.0px; height: 343.0px;" /></a>
-</li>
-<li><p class="first">Click <strong>Select</strong></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">On the Settings page you’ll see a warning concerning the VM size
-chosen.</p>
-</div>
-<p>Use the information in Table 3.6 to complete the “Settings”
-configuration page during this deployment.</p>
-<p>Table 3.6</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="70%" />
-<col width="30%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Key</th>
-<th class="head">Value</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Storage Type</td>
-<td>HDD</td>
-</tr>
-<tr class="row-odd"><td>Use managed disks</td>
-<td>No</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li><p class="first">Change the “Disk type” to <strong>HDD</strong></p>
-</li>
-<li><p class="first">Set “Use managed disk” to <strong>No</strong></p>
-</li>
-<li><p class="first">Keep the other configurations unmodified</p>
-<a class="reference internal image-reference" href="../../_images/image121.png"><img alt="../../_images/image121.png" src="../../_images/image121.png" style="width: 676.0px; height: 738.0px;" /></a>
-</li>
-<li><p class="first">Click <strong>OK</strong></p>
+<li><p class="first">Click <strong>Review + create</strong> at the bottom of the page</p>
 </li>
 <li><p class="first">Verify the summary</p>
-<a class="reference internal image-reference" href="../../_images/image37-top.png"><img alt="../../_images/image37-top.png" src="../../_images/image37-top.png" style="width: 405.0px; height: 353.5px;" /></a>
 </li>
 <li><p class="first">Supply your email and phone number for validation</p>
-<img alt="../../_images/lab-instance-validation.png" src="../../_images/lab-instance-validation.png" />
+<a class="reference internal image-reference" href="../../_images/image37-top.png"><img alt="../../_images/image37-top.png" src="../../_images/image37-top.png" style="width: 602.0px; height: 554.0px;" /></a>
 </li>
-<li><p class="first">Click <strong>Purchase</strong> or <strong>Create</strong></p>
+<li><p class="first">Click <strong>Create</strong>.  You will receive status “Deployment underway”.
+Continue on after receiving “Your deployment is complete”.</p>
 </li>
 <li><p class="first">Go to <strong>Resource groups</strong> and click on your resource group</p>
 </li>
@@ -933,14 +862,8 @@ test WordPress again.</p>
 </div>
 <div class="section" id="task-lab-3-teardown">
 <h1>2.3.7. Task – Lab 3 Teardown<a class="headerlink" href="#task-lab-3-teardown" title="Permalink to this headline">¶</a></h1>
-<p>Please revoke BIG-IP license for reuse in next lab then delete lab resource group.</p>
 <ol class="arabic">
-<li><p class="first">Revoke BIG-IP license for resuse in next lab.</p>
-<ul class="simple">
-<li>From BIG-IP GUI select <strong>System -&gt; License</strong> then select <strong>revoke</strong>.</li>
-</ul>
-</li>
-<li><p class="first">Delete resource group <strong>bigipuser&lt;student number&gt;-aa</strong> and created earlier in this lab.</p>
+<li><p class="first">Delete resource group <strong>student##-rg1</strong> and created earlier in this lab.</p>
 <ul class="simple">
 <li>From Azure Portal select <strong>Resource Group</strong></li>
 <li>Select <strong>…</strong> on right side of the resource group created earlier</li>
@@ -976,7 +899,7 @@ UPDATE CID 31.0 (bigip1.azure.local) at 10:32:27 FORCE_SYNC</p>
 		     <div class="row next-prev-btn-row">
            <div class="col-lg-12">
            
-		        <a href="module3.html" title="2.3. Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
+		        <a href="module3.html" title="2.3. Module – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates" accesskey="p" class="btn btn-primary pull-left"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</a>
            
            
 		     </div>

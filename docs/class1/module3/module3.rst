@@ -1,4 +1,4 @@
-Module 3 – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates
+Module – Deploy an F5 BIG-IP Active/Active HA Pair Using ARM Templates
 ========================================================================
 
 In this lab you will be deploying an active/active pair of F5 BIG-IPs
