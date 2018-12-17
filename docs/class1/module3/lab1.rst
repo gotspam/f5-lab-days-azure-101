@@ -47,13 +47,13 @@ going to the Azure Portal.
    +--------------------------+---------------------------------+
    | Resource group           | Create new                      |
    +--------------------------+---------------------------------+
-   | Resource group name      | student98-rg1                   |
+   | Resource group name      | student##-rg1                   |
    +--------------------------+---------------------------------+
    | Location                 | <Closest Azure DC>              |
    +--------------------------+---------------------------------+
    | Admin Password           | ChangeMeNow123                  |
    +--------------------------+---------------------------------+
-   | Dns Name for Public IP   | student98-arm                   |
+   | Dns Name for Public IP   | student##-arm                   |
    +--------------------------+---------------------------------+
 
    .. image:: /_static/lab3-image004.png
