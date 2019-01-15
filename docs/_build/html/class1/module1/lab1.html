@@ -439,7 +439,7 @@ in Table 1.1 below to complete the “Create virtual machine” Basics page.</p>
 <td>Allow selected ports</td>
 </tr>
 <tr class="row-even"><td>Selected inbound ports</td>
-<td>HTTPS</td>
+<td>HTTPS, SSH</td>
 </tr>
 </tbody>
 </table>
@@ -529,13 +529,57 @@ BIG-IP management traffic.</p>
 to view public and private address of the F5 BIG-IP virtual machine.</p>
 <a class="reference internal image-reference" href="../../_images/image20.png"><img alt="../../_images/image20.png" src="../../_images/image20.png" style="height: 300px;" /></a>
 </li>
-<li><p class="first">Connect to the F5 GUI by going to <strong>https://&lt;F5-BIG-IP-public-IP&gt;:8443</strong></p>
+<li><p class="first">Connect to the F5 GUI by going to <strong>https://&lt;F5-BIG-IP-public-IP&gt;:443</strong></p>
 </li>
 <li><p class="first">Accept the SSL certificate warning</p>
 </li>
 <li><p class="first">Log into the BIG-IP using the credentials configured in the previous steps
 Username: azureuser
 Password: ChangeMeNow123</p>
+</li>
+<li><p class="first">Click <strong>Next</strong> on Setup Utility</p>
+</li>
+<li><p class="first">Click <strong>Next</strong> on Setup Utility -&gt; License</p>
+</li>
+<li><p class="first">Click <strong>Next</strong> on Setup Utility -&gt; Resource Provisioning</p>
+</li>
+<li><p class="first">Click <strong>Next</strong> on Setup Utility -&gt; Device Certificates</p>
+</li>
+<li><p class="first">Enter Hostname and Password using info below then click <strong>Next</strong></p>
+<p>Table 1.5</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Hostname</td>
+<td>student.f5demo.com</td>
+</tr>
+<tr class="row-odd"><td>Password</td>
+<td>ChangeMeNow123</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">Click <strong>Finished</strong> on Setup Utility -&gt; Network</p>
+</li>
+<li><p class="first">SSH azureuser&#64;&lt;F5-BIG-IP-public-IP&gt; and enter password</p>
+</li>
+<li><p class="first">Type <strong>modify sys httpd ssl-port 8443</strong></p>
+</li>
+<li><p class="first">Type <strong>modify net self-allow defaults add { tcp:8443 }</strong></p>
+</li>
+<li><p class="first">Type <strong>modify net self-allow defaults delete { tcp:443 }</strong></p>
+</li>
+<li><p class="first">Type <strong>save sys config</strong></p>
+</li>
+<li><p class="first">Reconnect to the F5 GUI by going to <strong>https://&lt;F5-BIG-IP-public-IP&gt;:8443</strong></p>
 </li>
 </ol>
 </div>
@@ -555,7 +599,7 @@ to view public and private address of the F5 BIG-IP virtual machine.</p>
 subsequent steps.</p>
 </div>
 </li>
-<li><p class="first">Connect to the BIG-IP using https://&lt;F5-public-IP&gt;:8443</p>
+<li><p class="first">Connect to the BIG-IP using <a class="reference external" href="https:/">https:/</a>/&lt;F5-public-IP&gt;:8443</p>
 </li>
 <li><p class="first">From the BIG-IP GUI, go to <strong>Local traffic -&gt; Pools -&gt; Pool List</strong> and
 click on the <strong>+</strong> sign. Configure the pool using the information

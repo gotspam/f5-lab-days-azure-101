@@ -154,7 +154,7 @@ BIG-IP.
    +-----------------------+-------------------------------------------------+
    | Public inbound ports  | Allow selected ports                            |
    +-----------------------+-------------------------------------------------+
-   | Selected inbound ports| HTTPS                                           |
+   | Selected inbound ports| HTTPS, SSH                                      |
    +-----------------------+-------------------------------------------------+
 
    Example:
@@ -243,11 +243,34 @@ rule set.
    .. image:: /_static/image20.png
       :height: 300px
 
-#. Connect to the F5 GUI by going to **https://<F5-BIG-IP-public-IP>:8443**
+#. Connect to the F5 GUI by going to **https://<F5-BIG-IP-public-IP>:443**
 #. Accept the SSL certificate warning
 #. Log into the BIG-IP using the credentials configured in the previous steps
    Username: azureuser
    Password: ChangeMeNow123
+#. Click **Next** on Setup Utility
+#. Click **Next** on Setup Utility -> License
+#. Click **Next** on Setup Utility -> Resource Provisioning
+#. Click **Next** on Setup Utility -> Device Certificates
+#. Enter Hostname and Password using info below then click **Next**
+
+   Table 1.5
+
+   +--------------------+-------------------+
+   | Key                | Value             |
+   +====================+===================+
+   | Hostname           | student.f5demo.com|
+   +--------------------+-------------------+
+   | Password           | ChangeMeNow123    |
+   +--------------------+-------------------+
+
+#. Click **Finished** on Setup Utility -> Network
+#. SSH azureuser@<F5-BIG-IP-public-IP> and enter password
+#. Type **modify sys httpd ssl-port 8443**
+#. Type **modify net self-allow defaults add { tcp:8443 }**
+#. Type **modify net self-allow defaults delete { tcp:443 }**
+#. Type **save sys config**
+#. Reconnect to the F5 GUI by going to **https://<F5-BIG-IP-public-IP>:8443**
 
 Task – Allow Internet access to WordPress through the BIG-IP
 ------------------------------------------------------------
@@ -267,7 +290,7 @@ back to the Microsoft Azure Portal.
       Remember WordPress private IP address. This will be used in
       subsequent steps.
 
-#. Connect to the BIG-IP using \https://<F5-public-IP>:8443
+#. Connect to the BIG-IP using https://<F5-public-IP>:8443
 #. From the BIG-IP GUI, go to **Local traffic -> Pools -> Pool List** and
    click on the **+** sign. Configure the pool using the information
    provided in Table 1.8 below leaving all other fields set to defaults.
